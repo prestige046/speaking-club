@@ -10,7 +10,6 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <style>
-        /* ===== ТЁМНАЯ ТЕМА ===== */
         * {
             margin: 0;
             padding: 0;
@@ -416,7 +415,7 @@
         </div>
     </div>
     
-    <!-- НАСТРОЙКИ - ИСПРАВЛЕННАЯ РАБОЧАЯ КНОПКА -->
+    <!-- НАСТРОЙКИ -->
     <div id="settings-section" class="hidden">
         <div class="section">
             <div class="section-title">⚙️ Настройки</div>
@@ -507,7 +506,7 @@
             }
         }
         
-        // ✅ ОТПРАВКА НАСТРОЙКИ В БОТА
+        // ОТПРАВКА НАСТРОЙКИ В БОТА
         function toggleCorrections() {
             const isEnabled = document.getElementById('correctionsSwitch').checked;
             tg.sendData(JSON.stringify({
@@ -517,7 +516,7 @@
             console.log('🔄 Отправлена настройка:', isEnabled);
         }
         
-        // ✅ ЭКСПОРТ ДИАЛОГОВ
+        // ЭКСПОРТ ДИАЛОГОВ
         function exportChat() {
             tg.sendData(JSON.stringify({
                 action: 'exportChat'
@@ -528,7 +527,7 @@
             });
         }
         
-        // ✅ КОПИРОВАНИЕ РЕФЕРАЛЬНОЙ ССЫЛКИ
+        // КОПИРОВАНИЕ РЕФЕРАЛЬНОЙ ССЫЛКИ
         function copyReferralLink() {
             const link = document.getElementById('referralLink').textContent;
             navigator.clipboard.writeText(link).then(() => {
@@ -539,7 +538,7 @@
             });
         }
         
-        // ✅ ОБНОВЛЕНИЕ ИНТЕРФЕЙСА
+        // ОБНОВЛЕНИЕ ИНТЕРФЕЙСА
         function updateUI(data) {
             userData = data;
             
@@ -564,7 +563,7 @@
             renderCalendar(currentYear, currentMonth);
         }
         
-        // ✅ КАЛЕНДАРЬ
+        // КАЛЕНДАРЬ
         function renderCalendar(year, month) {
             const monthNames = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь',
                                'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
@@ -582,7 +581,7 @@
                 html += `<div class="weekday ${weekendClass}">${day}</div>`;
             });
             
-            // Пустые ячейки
+            // Пустые ячейки до первого дня
             for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
                 html += '<div></div>';
             }
