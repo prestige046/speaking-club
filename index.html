@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Разговорный клуб</title>
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+        }
+        
+        body {
+            background: #ffffff;
+            color: #000000;
+            padding: 16px;
+        }
+        
+        .profile-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 24px;
+        }
+        
+        .avatar {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: #40a7e3;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 32px;
+            font-weight: bold;
+        }
+        
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .stat-card {
+            background: #f0f0f0;
+            padding: 16px;
+            border-radius: 12px;
+            text-align: center;
+        }
+        
+        .stat-value {
+            font-size: 24px;
+            font-weight: bold;
+            color: #40a7e3;
+            margin-bottom: 4px;
+        }
+        
+        .stat-label {
+            font-size: 14px;
+            color: #666;
+        }
+        
+        .streak-section {
+            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            padding: 20px;
+            border-radius: 16px;
+            color: white;
+            margin-bottom: 24px;
+        }
+        
+        .streak-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        
+        .streak-icon {
+            font-size: 28px;
+        }
+        
+        .streak-numbers {
+            display: flex;
+            justify-content: space-between;
+        }
+        
+        .streak-item {
+            text-align: center;
+        }
+        
+        .streak-count {
+            font-size: 32px;
+            font-weight: bold;
+        }
+        
+        .calendar {
+            background: #f0f0f0;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .calendar-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 16px;
+        }
+        
+        .calendar-grid {
+            display: grid;
+            grid-template-columns: repeat(7, 1fr);
+            gap: 4px;
+            text-align: center;
+        }
+        
+        .calendar-weekday {
+            font-size: 12px;
+            color: #666;
+            padding: 4px;
+        }
+        
+        .calendar-day {
+            padding: 8px 4px;
+            border-radius: 8px;
+            font-size: 14px;
+        }
+        
+        .calendar-day.active {
+            background: #40a7e3;
+            color: white;
+        }
+        
+        .menu-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 12px;
+            margin-top: 16px;
+        }
+        
+        .menu-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            padding: 12px;
+            background: #f0f0f0;
+            border-radius: 12px;
+            border: none;
+            cursor: pointer;
+        }
+        
+        .menu-icon {
+            font-size: 24px;
+        }
+        
+        .menu-label {
+            font-size: 12px;
+            text-align: center;
+        }
+        
+        .level-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #40a7e3;
+            color: white;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 8px;
+        }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <!-- Профиль -->
+        <div class="profile-header">
+            <div>
+                <h1 id="userName">Roman</h1>
+                <span class="level-badge" id="userLevel">B1 🌳</span>
+            </div>
+            <div class="avatar" id="userAvatar">🎙</div>
+        </div>
+        
+        <!-- Статистика -->
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-value" id="userXP">0</div>
+                <div class="stat-label">Опыт</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="userMessages">0</div>
+                <div class="stat-label">Сообщений</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="userVoice">0</div>
+                <div class="stat-label">Минут</div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-value" id="userLang">🇬🇧</div>
+                <div class="stat-label">Язык</div>
+            </div>
+        </div>
+        
+        <!-- Стрейк -->
+        <div class="streak-section">
+            <div class="streak-header">
+                <span class="streak-icon">🔥</span>
+                <h2>Твой стрейк</h2>
+            </div>
+            <div class="streak-numbers">
+                <div class="streak-item">
+                    <div class="streak-count" id="currentStreak">0</div>
+                    <div>текущий</div>
+                </div>
+                <div class="streak-item">
+                    <div class="streak-count" id="longestStreak">0</div>
+                    <div>рекорд</div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Календарь -->
+        <div class="calendar">
+            <div class="calendar-header">
+                <h3 id="calendarMonth">Февраль 2026</h3>
+                <span>📅</span>
+            </div>
+            <div class="calendar-grid" id="calendarGrid">
+                <!-- Сюда JavaScript подставит дни -->
+            </div>
+        </div>
+        
+        <!-- Меню с иконками -->
+        <div class="menu-grid">
+            <button class="menu-item" onclick="tg.close()">
+                <span class="menu-icon">🔙</span>
+                <span class="menu-label">Закрыть</span>
+            </button>
+            <button class="menu-item" onclick="tg.sendData('lang')">
+                <span class="menu-icon">🌍</span>
+                <span class="menu-label">Язык</span>
+            </button>
+            <button class="menu-item" onclick="tg.sendData('gift')">
+                <span class="menu-icon">🎁</span>
+                <span class="menu-label">Подарок</span>
+            </button>
+            <button class="menu-item" onclick="tg.sendData('help')">
+                <span class="menu-icon">❓</span>
+                <span class="menu-label">Помощь</span>
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        // Подключаемся к Telegram
+        let tg = window.Telegram.WebApp;
+        tg.expand(); // Разворачиваем на весь экран
+        tg.ready();
+        
+        // Получаем данные от бота
+        tg.onEvent('webAppData', function(data) {
+            let userData = JSON.parse(data.data);
+            updateUI(userData);
+        });
+        
+        // Функция обновления интерфейса
+        function updateUI(data) {
+            document.getElementById('userXP').textContent = data.xp || 0;
+            document.getElementById('userMessages').textContent = data.messages || 0;
+            document.getElementById('userVoice').textContent = (data.voice || 0).toFixed(1);
+            document.getElementById('userLang').textContent = data.lang || '🇬🇧';
+            document.getElementById('currentStreak').textContent = data.currentStreak || 0;
+            document.getElementById('longestStreak').textContent = data.longestStreak || 0;
+            
+            // Генерируем календарь
+            generateCalendar(data.activeDays || []);
+        }
+        
+        // Функция календаря
+        function generateCalendar(activeDays) {
+            const now = new Date();
+            const year = now.getFullYear();
+            const month = now.getMonth();
+            
+            const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
+                               'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
+            document.getElementById('calendarMonth').textContent = `${monthNames[month]} ${year}`;
+            
+            const firstDay = new Date(year, month, 1).getDay();
+            const daysInMonth = new Date(year, month + 1, 0).getDate();
+            
+            let calendarHTML = '';
+            const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
+            
+            weekdays.forEach(day => {
+                calendarHTML += `<div class="calendar-weekday">${day}</div>`;
+            });
+            
+            // Пустые ячейки до первого дня
+            for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
+                calendarHTML += '<div class="calendar-day"></div>';
+            }
+            
+            // Дни месяца
+            for (let day = 1; day <= daysInMonth; day++) {
+                const isActive = activeDays.includes(day);
+                calendarHTML += `<div class="calendar-day ${isActive ? 'active' : ''}">${day}</div>`;
+            }
+            
+            document.getElementById('calendarGrid').innerHTML = calendarHTML;
+        }
+        
+        // Просим бота прислать данные
+        tg.sendData(JSON.stringify({action: 'getUserData'}));
+    </script>
+</body>
+</html>
