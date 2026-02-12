@@ -25,7 +25,6 @@
             min-height: 100vh;
         }
         
-        /* Профиль - тёмная тема */
         .profile-header {
             display: flex;
             align-items: center;
@@ -52,7 +51,6 @@
             color: #ffcc00;
         }
         
-        /* Статистика - тёмная */
         .stats-row {
             display: flex;
             align-items: center;
@@ -81,7 +79,6 @@
             color: #40a7e3;
         }
         
-        /* Стрейк - без изменений */
         .streak-card {
             background: linear-gradient(135deg, #FF6B6B, #FF8E53);
             border-radius: 16px;
@@ -114,7 +111,6 @@
             margin-left: 8px;
         }
         
-        /* Календарь - тёмный */
         .calendar-card {
             background: #2c2c2e;
             border-radius: 16px;
@@ -201,7 +197,6 @@
             color: white;
         }
         
-        /* Секции - тёмные */
         .section {
             background: #2c2c2e;
             border-radius: 16px;
@@ -217,7 +212,6 @@
             color: #ffffff;
         }
         
-        /* Рефералы - тёмные */
         .referral-box {
             background: #1c1c1e;
             border: 1px solid #3a3a3c;
@@ -242,7 +236,6 @@
             cursor: pointer;
         }
         
-        /* Настройки - тёмные */
         .setting-row {
             display: flex;
             align-items: center;
@@ -267,7 +260,6 @@
             color: #8e8e93;
         }
         
-        /* Switch - iOS стиль */
         .switch {
             position: relative;
             display: inline-block;
@@ -313,7 +305,6 @@
             transform: translateX(20px);
         }
         
-        /* Нижнее меню - тёмное */
         .bottom-nav {
             position: fixed;
             bottom: 0;
@@ -363,7 +354,7 @@
     </style>
 </head>
 <body>
-    <!-- ПРОФИЛЬ (ТЁМНАЯ ТЕМА) -->
+    <!-- ПРОФИЛЬ -->
     <div id="profile-section">
         <div class="profile-header">
             <div>
@@ -408,7 +399,7 @@
         </div>
     </div>
     
-    <!-- РЕФЕРАЛЫ (ТЁМНАЯ ТЕМА) -->
+    <!-- РЕФЕРАЛЫ -->
     <div id="referrals-section" class="hidden">
         <div class="section">
             <div class="section-title">👥 Invite Friends</div>
@@ -424,7 +415,7 @@
         </div>
     </div>
     
-    <!-- НАСТРОЙКИ (РУССКИЙ, ТЁМНАЯ ТЕМА) -->
+    <!-- НАСТРОЙКИ - РАБОЧАЯ КНОПКА -->
     <div id="settings-section" class="hidden">
         <div class="section">
             <div class="section-title">⚙️ Настройки</div>
@@ -435,7 +426,8 @@
                     <div class="setting-desc">Автоматическое исправление грамматики</div>
                 </div>
                 <label class="switch">
-                    <input type="checkbox" id="correctionsSwitch">
+                    <!-- ✅ ВОТ ТУТ ДОБАВЛЕН onchange -->
+                    <input type="checkbox" id="correctionsSwitch" onchange="toggleCorrections()">
                     <span class="slider"></span>
                 </label>
             </div>
@@ -452,7 +444,7 @@
         </div>
     </div>
     
-    <!-- НИЖНЕЕ МЕНЮ (ТЁМНОЕ) -->
+    <!-- НИЖНЕЕ МЕНЮ -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="showSection('profile')">
             <span class="nav-icon">👤</span>
@@ -473,7 +465,6 @@
         tg.expand();
         tg.ready();
         
-        // ПРИНУДИТЕЛЬНО ТЁМНАЯ ТЕМА
         tg.setHeaderColor('#1c1c1e');
         tg.setBackgroundColor('#1c1c1e');
         
@@ -482,10 +473,8 @@
         let currentMonth = currentDate.getMonth();
         let userData = {};
         
-        // Отправляем запрос данных
         tg.sendData(JSON.stringify({action: 'getUserData'}));
         
-        // Слушаем ответ от бота
         tg.onEvent('message', function(event) {
             try {
                 const data = JSON.parse(event.data);
@@ -513,12 +502,14 @@
             }
         }
         
+        // ✅ ФУНКЦИЯ ВЫЗЫВАЕТСЯ ПРИ ПЕРЕКЛЮЧЕНИИ
         function toggleCorrections() {
             const isEnabled = document.getElementById('correctionsSwitch').checked;
             tg.sendData(JSON.stringify({
                 action: 'toggleCorrections',
                 value: isEnabled
             }));
+            console.log('Отправлено значение:', isEnabled);
         }
         
         function exportChat() {
@@ -553,8 +544,6 @@
             if (data.corrections !== undefined) {
                 switchEl.checked = data.corrections;
             }
-            switchEl.removeEventListener('change', toggleCorrections);
-            switchEl.addEventListener('change', toggleCorrections);
             
             if (data.referral_code) {
                 const botUsername = 'prestige046_bot';
