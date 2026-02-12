@@ -464,11 +464,6 @@
         tg.expand();
         tg.ready();
         
-        // ❌ УБРАЛИ ПРОБЛЕМНЫЕ СТРОКИ
-        // tg.setHeaderColor('#1c1c1e');
-        // tg.setBackgroundColor('#1c1c1e');
-        // ❌
-        
         let currentDate = new Date();
         let currentYear = currentDate.getFullYear();
         let currentMonth = currentDate.getMonth();
@@ -508,7 +503,7 @@
             }
         }
         
-        // ✅ ОТПРАВКА НАСТРОЙКИ В БОТА
+        // ОТПРАВКА НАСТРОЙКИ В БОТА
         function toggleCorrections() {
             const isEnabled = document.getElementById('correctionsSwitch').checked;
             tg.sendData(JSON.stringify({
@@ -518,7 +513,7 @@
             console.log('🔄 Отправлена настройка:', isEnabled);
         }
         
-        // ✅ ЭКСПОРТ ДИАЛОГОВ
+        // ЭКСПОРТ ДИАЛОГОВ
         function exportChat() {
             tg.sendData(JSON.stringify({
                 action: 'exportChat'
@@ -529,7 +524,7 @@
             });
         }
         
-        // ✅ КОПИРОВАНИЕ РЕФЕРАЛЬНОЙ ССЫЛКИ
+        // КОПИРОВАНИЕ РЕФЕРАЛЬНОЙ ССЫЛКИ
         function copyReferralLink() {
             const link = document.getElementById('referralLink').textContent;
             navigator.clipboard.writeText(link).then(() => {
@@ -540,7 +535,7 @@
             });
         }
         
-        // ✅ ОБНОВЛЕНИЕ ИНТЕРФЕЙСА
+        // ОБНОВЛЕНИЕ ИНТЕРФЕЙСА
         function updateUI(data) {
             userData = data;
             
@@ -549,23 +544,22 @@
             document.getElementById('currentStreak').innerText = data.currentStreak || 0;
             document.getElementById('referralsCount').innerText = data.referrals_count || 0;
             
-            // Устанавливаем состояние переключателя
             const switchEl = document.getElementById('correctionsSwitch');
             if (data.corrections !== undefined) {
                 switchEl.checked = data.corrections;
             }
             
-            // Реферальная ссылка
             if (data.referral_code) {
                 const botUsername = 'prestige046_bot';
                 const refLink = `https://t.me/${botUsername}?start=ref_${data.referral_code}`;
                 document.getElementById('referralLink').innerText = refLink;
             }
             
+            // Отрисовываем календарь с полученными данными
             renderCalendar(currentYear, currentMonth);
         }
         
-        // ✅ КАЛЕНДАРЬ
+        // КАЛЕНДАРЬ
         function renderCalendar(year, month) {
             const monthNames = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь',
                                'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
@@ -609,7 +603,7 @@
             document.getElementById('calendarGrid').innerHTML = html;
         }
         
-        // ✅ Навигация по месяцам
+        // Навигация по месяцам
         function prevMonth() {
             if (currentMonth === 0) {
                 currentYear--;
@@ -629,6 +623,21 @@
             }
             renderCalendar(currentYear, currentMonth);
         }
+        
+        // ИНИЦИАЛИЗАЦИЯ ПРИ ЗАГРУЗКЕ
+        document.addEventListener('DOMContentLoaded', function() {
+            // Показываем календарь сразу, даже без данных от бота
+            const today = new Date();
+            currentYear = today.getFullYear();
+            currentMonth = today.getMonth();
+            
+            // Создаем временный userData для подсветки сегодня
+            if (!userData.activeDays) {
+                userData.activeDays = [];
+            }
+            
+            renderCalendar(currentYear, currentMonth);
+        });
     </script>
 </body>
 </html>
