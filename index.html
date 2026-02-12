@@ -17,6 +17,7 @@
             background: #ffffff;
             color: #000000;
             padding: 16px;
+            padding-bottom: 80px;
         }
         
         .header {
@@ -26,21 +27,16 @@
             margin-bottom: 24px;
         }
         
-        .title {
-            font-size: 24px;
-            font-weight: bold;
-        }
-        
         .avatar {
-            width: 48px;
-            height: 48px;
+            width: 64px;
+            height: 64px;
             border-radius: 50%;
             background: #40a7e3;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 24px;
+            font-size: 32px;
         }
         
         .stats-grid {
@@ -164,17 +160,26 @@
             margin-top: 8px;
         }
         
-        .settings-section {
+        .section {
             background: #f0f0f0;
-            padding: 16px;
-            border-radius: 12px;
+            padding: 20px;
+            border-radius: 16px;
             margin-bottom: 24px;
         }
         
-        .settings-title {
+        .section-title {
             font-size: 18px;
             font-weight: bold;
             margin-bottom: 16px;
+        }
+        
+        .referral-link {
+            background: white;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: monospace;
+            margin: 12px 0;
+            word-break: break-all;
         }
         
         .setting-item {
@@ -229,48 +234,36 @@
             transform: translateX(24px);
         }
         
-        .menu-grid {
-            display: grid;
-            grid-template-columns: repeat(4, 1fr);
-            gap: 12px;
-            margin-top: 16px;
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 12px;
+            border-top: 1px solid #f0f0f0;
         }
         
-        .menu-item {
+        .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
-            padding: 12px;
-            background: #f0f0f0;
-            border-radius: 12px;
-            border: none;
+            gap: 4px;
             cursor: pointer;
         }
         
-        .menu-icon {
+        .nav-icon {
             font-size: 24px;
         }
         
-        .menu-label {
+        .nav-label {
             font-size: 12px;
+            color: #666;
         }
         
-        .tab-bar {
-            display: flex;
-            margin-bottom: 20px;
-            border-bottom: 2px solid #f0f0f0;
-        }
-        
-        .tab {
-            flex: 1;
-            text-align: center;
-            padding: 12px;
-            cursor: pointer;
-        }
-        
-        .tab.active {
-            border-bottom: 2px solid #40a7e3;
+        .nav-item.active .nav-label {
             color: #40a7e3;
             font-weight: bold;
         }
@@ -281,15 +274,11 @@
     </style>
 </head>
 <body>
-    <div class="tab-bar">
-        <div class="tab active" onclick="showTab('profile')">📊 Профиль</div>
-        <div class="tab" onclick="showTab('settings')">⚙️ Настройки</div>
-    </div>
-    
-    <div id="profile-tab">
+    <!-- Профиль -->
+    <div id="profile-section">
         <div class="header">
             <div>
-                <div class="title">Разговорный клуб</div>
+                <div style="font-size: 24px; font-weight: bold;">Профиль</div>
                 <span class="level-badge" id="level">B1 🌳</span>
             </div>
             <div class="avatar">🎙</div>
@@ -343,9 +332,28 @@
         </div>
     </div>
     
-    <div id="settings-tab" class="hidden">
-        <div class="settings-section">
-            <div class="settings-title">⚙️ Настройки</div>
+    <!-- Рефералы -->
+    <div id="referrals-section" class="hidden">
+        <div class="section">
+            <div class="section-title">👥 Пригласи друзей</div>
+            <div style="margin-bottom: 16px;">
+                Отправь друзьям эту ссылку. За каждого друга, который начнет общаться, ты получишь +50 XP!
+            </div>
+            <div class="referral-link" id="referralLink">загрузка...</div>
+            <button onclick="copyReferralLink()" style="width: 100%; padding: 12px; background: #40a7e3; color: white; border: none; border-radius: 12px; font-size: 16px; margin-top: 8px;">
+                📋 Копировать ссылку
+            </button>
+            <div style="margin-top: 24px;">
+                <div style="font-size: 16px; font-weight: bold; margin-bottom: 12px;">Твои друзья:</div>
+                <div id="referralsCount">0</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Настройки -->
+    <div id="settings-section" class="hidden">
+        <div class="section">
+            <div class="section-title">⚙️ Настройки</div>
             
             <div class="setting-item">
                 <span>🔍 Исправлять ошибки</span>
@@ -356,35 +364,25 @@
             </div>
             
             <div style="margin-top: 20px; color: #666; font-size: 14px;">
-                Если включено — бот будет мягко исправлять грамматические и орфографические ошибки в твоих сообщениях.
+                Если включено — бот будет мягко исправлять грамматические ошибки в твоих сообщениях.
             </div>
-        </div>
-        
-        <div class="settings-section">
-            <div class="settings-title">🌍 Язык</div>
-            <button onclick="changeLanguage()" style="width: 100%; padding: 12px; background: #40a7e3; color: white; border: none; border-radius: 12px; font-size: 16px;">
-                🇬🇧 Сменить язык
-            </button>
         </div>
     </div>
     
-    <div class="menu-grid">
-        <button class="menu-item" onclick="tg.close()">
-            <span class="menu-icon">🔙</span>
-            <span class="menu-label">Закрыть</span>
-        </button>
-        <button class="menu-item" onclick="showTab('profile')">
-            <span class="menu-icon">📊</span>
-            <span class="menu-label">Профиль</span>
-        </button>
-        <button class="menu-item" onclick="showTab('settings')">
-            <span class="menu-icon">⚙️</span>
-            <span class="menu-label">Настройки</span>
-        </button>
-        <button class="menu-item" onclick="tg.sendData('help')">
-            <span class="menu-icon">❓</span>
-            <span class="menu-label">Помощь</span>
-        </button>
+    <!-- Нижнее меню - 3 кнопки -->
+    <div class="bottom-nav">
+        <div class="nav-item active" onclick="showSection('profile')">
+            <span class="nav-icon">👤</span>
+            <span class="nav-label">Профиль</span>
+        </div>
+        <div class="nav-item" onclick="showSection('referrals')">
+            <span class="nav-icon">👥</span>
+            <span class="nav-label">Рефералы</span>
+        </div>
+        <div class="nav-item" onclick="showSection('settings')">
+            <span class="nav-icon">⚙️</span>
+            <span class="nav-label">Настройки</span>
+        </div>
     </div>
     
     <script>
@@ -395,20 +393,24 @@
         let currentDate = new Date();
         let currentYear = currentDate.getFullYear();
         let currentMonth = currentDate.getMonth();
-        
         let userData = {};
         
-        function showTab(tabName) {
-            document.getElementById('profile-tab').classList.add('hidden');
-            document.getElementById('settings-tab').classList.add('hidden');
-            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        function showSection(section) {
+            document.getElementById('profile-section').classList.add('hidden');
+            document.getElementById('referrals-section').classList.add('hidden');
+            document.getElementById('settings-section').classList.add('hidden');
             
-            if (tabName === 'profile') {
-                document.getElementById('profile-tab').classList.remove('hidden');
-                document.querySelectorAll('.tab')[0].classList.add('active');
+            document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
+            
+            if (section === 'profile') {
+                document.getElementById('profile-section').classList.remove('hidden');
+                document.querySelectorAll('.nav-item')[0].classList.add('active');
+            } else if (section === 'referrals') {
+                document.getElementById('referrals-section').classList.remove('hidden');
+                document.querySelectorAll('.nav-item')[1].classList.add('active');
             } else {
-                document.getElementById('settings-tab').classList.remove('hidden');
-                document.querySelectorAll('.tab')[1].classList.add('active');
+                document.getElementById('settings-section').classList.remove('hidden');
+                document.querySelectorAll('.nav-item')[2].classList.add('active');
             }
         }
         
@@ -420,12 +422,16 @@
             }));
         }
         
-        function changeLanguage() {
-            tg.sendData(JSON.stringify({action: 'changeLang'}));
+        function copyReferralLink() {
+            const link = document.getElementById('referralLink').textContent;
+            navigator.clipboard.writeText(link);
+            tg.showPopup({message: '✅ Ссылка скопирована!'});
         }
         
         function updateUI(data) {
             userData = data;
+            
+            // Профиль
             document.getElementById('xp').textContent = data.xp || 0;
             document.getElementById('messages').textContent = data.messages || 0;
             document.getElementById('voice').textContent = (data.voice || 0).toFixed(1);
@@ -433,10 +439,7 @@
             document.getElementById('currentStreak').textContent = data.currentStreak || 0;
             document.getElementById('longestStreak').textContent = data.longestStreak || 0;
             
-            if (data.corrections !== undefined) {
-                document.getElementById('correctionsSwitch').checked = data.corrections;
-            }
-            
+            // Уровень
             let xp = data.xp || 0;
             let level = 'A1 🌱';
             if (xp >= 100) level = 'A2 🌿';
@@ -445,6 +448,18 @@
             if (xp >= 1000) level = 'C1 🌴';
             if (xp >= 1500) level = 'C2 🏆';
             document.getElementById('level').textContent = level;
+            
+            // Настройки
+            if (data.corrections !== undefined) {
+                document.getElementById('correctionsSwitch').checked = data.corrections;
+            }
+            
+            // Рефералы
+            if (data.referral_code) {
+                const refLink = `https://t.me/{(window.Telegram.WebApp.initDataUnsafe.user?.username ? '@' + window.Telegram.WebApp.initDataUnsafe.user.username : 'your_bot')}?start=ref_${data.referral_code}`;
+                document.getElementById('referralLink').textContent = refLink;
+            }
+            document.getElementById('referralsCount').innerHTML = `🎉 У тебя ${data.referrals_count || 0} друзей`;
             
             renderCalendar(currentYear, currentMonth);
         }
@@ -472,41 +487,4 @@
             for (let day = 1; day <= daysInMonth; day++) {
                 let classes = ['day'];
                 
-                if (userData.activeDays && userData.activeDays.includes(day)) {
-                    classes.push('active');
-                }
-                
-                if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
-                    classes.push('today');
-                }
-                
-                html += `<div class="${classes.join(' ')}">${day}</div>`;
-            }
-            
-            document.getElementById('calendarGrid').innerHTML = html;
-        }
-        
-        function prevMonth() {
-            if (currentMonth === 0) {
-                currentYear--;
-                currentMonth = 11;
-            } else {
-                currentMonth--;
-            }
-            renderCalendar(currentYear, currentMonth);
-        }
-        
-        function nextMonth() {
-            if (currentMonth === 11) {
-                currentYear++;
-                currentMonth = 0;
-            } else {
-                currentMonth++;
-            }
-            renderCalendar(currentYear, currentMonth);
-        }
-        
-        tg.sendData(JSON.stringify({action: 'getUserData'}));
-    </script>
-</body>
-</html>
+                if (userData.activeDays &&
