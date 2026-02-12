@@ -164,6 +164,71 @@
             margin-top: 8px;
         }
         
+        .settings-section {
+            background: #f0f0f0;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 24px;
+        }
+        
+        .settings-title {
+            font-size: 18px;
+            font-weight: bold;
+            margin-bottom: 16px;
+        }
+        
+        .setting-item {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: 12px;
+        }
+        
+        .switch {
+            position: relative;
+            display: inline-block;
+            width: 52px;
+            height: 28px;
+        }
+        
+        .switch input {
+            opacity: 0;
+            width: 0;
+            height: 0;
+        }
+        
+        .slider {
+            position: absolute;
+            cursor: pointer;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: #ccc;
+            transition: .2s;
+            border-radius: 28px;
+        }
+        
+        .slider:before {
+            position: absolute;
+            content: "";
+            height: 24px;
+            width: 24px;
+            left: 2px;
+            bottom: 2px;
+            background-color: white;
+            transition: .2s;
+            border-radius: 50%;
+        }
+        
+        input:checked + .slider {
+            background-color: #40a7e3;
+        }
+        
+        input:checked + .slider:before {
+            transform: translateX(24px);
+        }
+        
         .menu-grid {
             display: grid;
             grid-template-columns: repeat(4, 1fr);
@@ -190,10 +255,38 @@
         .menu-label {
             font-size: 12px;
         }
+        
+        .tab-bar {
+            display: flex;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #f0f0f0;
+        }
+        
+        .tab {
+            flex: 1;
+            text-align: center;
+            padding: 12px;
+            cursor: pointer;
+        }
+        
+        .tab.active {
+            border-bottom: 2px solid #40a7e3;
+            color: #40a7e3;
+            font-weight: bold;
+        }
+        
+        .hidden {
+            display: none;
+        }
     </style>
 </head>
 <body>
-    <div id="app">
+    <div class="tab-bar">
+        <div class="tab active" onclick="showTab('profile')">📊 Профиль</div>
+        <div class="tab" onclick="showTab('settings')">⚙️ Настройки</div>
+    </div>
+    
+    <div id="profile-tab">
         <div class="header">
             <div>
                 <div class="title">Разговорный клуб</div>
@@ -248,25 +341,50 @@
             </div>
             <div class="calendar-grid" id="calendarGrid"></div>
         </div>
+    </div>
+    
+    <div id="settings-tab" class="hidden">
+        <div class="settings-section">
+            <div class="settings-title">⚙️ Настройки</div>
+            
+            <div class="setting-item">
+                <span>🔍 Исправлять ошибки</span>
+                <label class="switch">
+                    <input type="checkbox" id="correctionsSwitch" checked onchange="toggleCorrections()">
+                    <span class="slider"></span>
+                </label>
+            </div>
+            
+            <div style="margin-top: 20px; color: #666; font-size: 14px;">
+                Если включено — бот будет мягко исправлять грамматические и орфографические ошибки в твоих сообщениях.
+            </div>
+        </div>
         
-        <div class="menu-grid">
-            <button class="menu-item" onclick="tg.close()">
-                <span class="menu-icon">🔙</span>
-                <span class="menu-label">Закрыть</span>
-            </button>
-            <button class="menu-item" onclick="tg.sendData('lang')">
-                <span class="menu-icon">🌍</span>
-                <span class="menu-label">Язык</span>
-            </button>
-            <button class="menu-item" onclick="tg.sendData('gift')">
-                <span class="menu-icon">🎁</span>
-                <span class="menu-label">Подарок</span>
-            </button>
-            <button class="menu-item" onclick="tg.sendData('help')">
-                <span class="menu-icon">❓</span>
-                <span class="menu-label">Помощь</span>
+        <div class="settings-section">
+            <div class="settings-title">🌍 Язык</div>
+            <button onclick="changeLanguage()" style="width: 100%; padding: 12px; background: #40a7e3; color: white; border: none; border-radius: 12px; font-size: 16px;">
+                🇬🇧 Сменить язык
             </button>
         </div>
+    </div>
+    
+    <div class="menu-grid">
+        <button class="menu-item" onclick="tg.close()">
+            <span class="menu-icon">🔙</span>
+            <span class="menu-label">Закрыть</span>
+        </button>
+        <button class="menu-item" onclick="showTab('profile')">
+            <span class="menu-icon">📊</span>
+            <span class="menu-label">Профиль</span>
+        </button>
+        <button class="menu-item" onclick="showTab('settings')">
+            <span class="menu-icon">⚙️</span>
+            <span class="menu-label">Настройки</span>
+        </button>
+        <button class="menu-item" onclick="tg.sendData('help')">
+            <span class="menu-icon">❓</span>
+            <span class="menu-label">Помощь</span>
+        </button>
     </div>
     
     <script>
@@ -280,6 +398,32 @@
         
         let userData = {};
         
+        function showTab(tabName) {
+            document.getElementById('profile-tab').classList.add('hidden');
+            document.getElementById('settings-tab').classList.add('hidden');
+            document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+            
+            if (tabName === 'profile') {
+                document.getElementById('profile-tab').classList.remove('hidden');
+                document.querySelectorAll('.tab')[0].classList.add('active');
+            } else {
+                document.getElementById('settings-tab').classList.remove('hidden');
+                document.querySelectorAll('.tab')[1].classList.add('active');
+            }
+        }
+        
+        function toggleCorrections() {
+            const isEnabled = document.getElementById('correctionsSwitch').checked;
+            tg.sendData(JSON.stringify({
+                action: 'toggleCorrections',
+                value: isEnabled
+            }));
+        }
+        
+        function changeLanguage() {
+            tg.sendData(JSON.stringify({action: 'changeLang'}));
+        }
+        
         function updateUI(data) {
             userData = data;
             document.getElementById('xp').textContent = data.xp || 0;
@@ -288,6 +432,10 @@
             document.getElementById('lang').textContent = data.lang || '🇬🇧';
             document.getElementById('currentStreak').textContent = data.currentStreak || 0;
             document.getElementById('longestStreak').textContent = data.longestStreak || 0;
+            
+            if (data.corrections !== undefined) {
+                document.getElementById('correctionsSwitch').checked = data.corrections;
+            }
             
             let xp = data.xp || 0;
             let level = 'A1 🌱';
