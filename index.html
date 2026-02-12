@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Разговорный клуб</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
     <style>
@@ -10,35 +10,54 @@
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, sans-serif;
         }
         
         body {
-            background: #ffffff;
-            color: #000000;
+            background: var(--tg-theme-bg-color, #1c1c1e);
+            color: var(--tg-theme-text-color, #ffffff);
             padding: 16px;
             padding-bottom: 80px;
+            min-height: 100vh;
         }
         
+        /* Профиль */
         .header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 24px;
+            background: var(--tg-theme-secondary-bg-color, #2c2c2e);
+            padding: 20px;
+            border-radius: 16px;
         }
         
         .avatar {
-            width: 64px;
-            height: 64px;
+            width: 72px;
+            height: 72px;
             border-radius: 50%;
-            background: #40a7e3;
+            background: linear-gradient(135deg, #40a7e3, #2c6fb0);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 32px;
+            font-size: 36px;
+            box-shadow: 0 4px 12px rgba(64, 167, 227, 0.3);
         }
         
+        .level-badge {
+            display: inline-block;
+            padding: 6px 16px;
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: white;
+            border-radius: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            margin-top: 12px;
+            box-shadow: 0 2px 8px rgba(64, 167, 227, 0.2);
+        }
+        
+        /* Сетка статистики */
         .stats-grid {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -47,37 +66,54 @@
         }
         
         .stat-card {
-            background: #f0f0f0;
-            padding: 16px;
-            border-radius: 12px;
+            background: var(--tg-theme-secondary-bg-color, #2c2c2e);
+            padding: 18px;
+            border-radius: 16px;
             text-align: center;
+            transition: transform 0.1s;
+        }
+        
+        .stat-card:active {
+            transform: scale(0.98);
         }
         
         .stat-value {
-            font-size: 24px;
+            font-size: 28px;
             font-weight: bold;
-            color: #40a7e3;
-            margin-bottom: 4px;
+            color: var(--tg-theme-button-color, #40a7e3);
+            margin-bottom: 6px;
         }
         
         .stat-label {
-            font-size: 14px;
-            color: #666;
+            font-size: 13px;
+            color: var(--tg-theme-hint-color, #98989e);
+            font-weight: 500;
         }
         
+        /* Стрейк */
         .streak-card {
             background: linear-gradient(135deg, #FF6B6B, #FF8E53);
-            padding: 20px;
-            border-radius: 16px;
+            padding: 24px;
+            border-radius: 20px;
             color: white;
             margin-bottom: 24px;
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
         }
         
         .streak-header {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+        
+        .streak-header h2 {
+            font-size: 20px;
+            font-weight: 600;
+        }
+        
+        .streak-icon {
+            font-size: 32px;
         }
         
         .streak-numbers {
@@ -90,14 +126,22 @@
         }
         
         .streak-count {
-            font-size: 32px;
+            font-size: 40px;
             font-weight: bold;
+            line-height: 1;
+            margin-bottom: 6px;
         }
         
+        .streak-label {
+            font-size: 14px;
+            opacity: 0.9;
+        }
+        
+        /* Календарь */
         .calendar-section {
-            background: #f0f0f0;
-            padding: 16px;
-            border-radius: 12px;
+            background: var(--tg-theme-secondary-bg-color, #2c2c2e);
+            padding: 20px;
+            border-radius: 20px;
             margin-bottom: 24px;
         }
         
@@ -105,7 +149,13 @@
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 16px;
+            margin-bottom: 20px;
+        }
+        
+        .calendar-header h3 {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--tg-theme-text-color, #ffffff);
         }
         
         .calendar-nav {
@@ -114,86 +164,148 @@
         }
         
         .nav-button {
-            background: none;
+            background: var(--tg-theme-button-color, #40a7e3);
             border: none;
-            font-size: 20px;
+            color: white;
+            font-size: 18px;
             cursor: pointer;
-            padding: 4px 8px;
+            padding: 8px 16px;
+            border-radius: 12px;
+            font-weight: 600;
+            transition: opacity 0.1s;
+        }
+        
+        .nav-button:active {
+            opacity: 0.7;
         }
         
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
-            gap: 4px;
+            gap: 6px;
             text-align: center;
         }
         
         .weekday {
-            font-size: 12px;
-            color: #666;
-            padding: 4px;
+            font-size: 13px;
+            color: var(--tg-theme-hint-color, #98989e);
+            padding: 8px 4px;
+            font-weight: 500;
         }
         
         .day {
-            padding: 8px 4px;
-            border-radius: 8px;
-            font-size: 14px;
+            padding: 10px 4px;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 500;
+            color: var(--tg-theme-text-color, #ffffff);
         }
         
         .day.active {
-            background: #40a7e3;
+            background: var(--tg-theme-button-color, #40a7e3);
             color: white;
+            font-weight: 600;
         }
         
         .day.today {
-            border: 2px solid #40a7e3;
-            font-weight: bold;
+            border: 2px solid var(--tg-theme-button-color, #40a7e3);
+            background: transparent;
+            font-weight: 700;
         }
         
-        .level-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #40a7e3;
-            color: white;
-            border-radius: 20px;
-            font-size: 14px;
-            margin-top: 8px;
-        }
-        
+        /* Секции */
         .section {
-            background: #f0f0f0;
-            padding: 20px;
-            border-radius: 16px;
+            background: var(--tg-theme-secondary-bg-color, #2c2c2e);
+            padding: 24px;
+            border-radius: 20px;
             margin-bottom: 24px;
         }
         
         .section-title {
-            font-size: 18px;
-            font-weight: bold;
-            margin-bottom: 16px;
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: var(--tg-theme-text-color, #ffffff);
         }
         
+        /* Рефералы */
         .referral-link {
-            background: white;
-            padding: 12px;
-            border-radius: 8px;
+            background: var(--tg-theme-bg-color, #1c1c1e);
+            padding: 16px;
+            border-radius: 14px;
             font-family: monospace;
-            margin: 12px 0;
+            margin: 16px 0;
             word-break: break-all;
+            color: var(--tg-theme-text-color, #ffffff);
+            border: 1px solid var(--tg-theme-hint-color, #3a3a3c);
+            font-size: 14px;
         }
         
+        .copy-button {
+            width: 100%;
+            padding: 16px;
+            background: var(--tg-theme-button-color, #40a7e3);
+            color: white;
+            border: none;
+            border-radius: 16px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: opacity 0.1s;
+            margin-top: 8px;
+        }
+        
+        .copy-button:active {
+            opacity: 0.7;
+        }
+        
+        .friends-count {
+            margin-top: 24px;
+            padding: 16px;
+            background: var(--tg-theme-bg-color, #1c1c1e);
+            border-radius: 14px;
+            font-size: 16px;
+            color: var(--tg-theme-text-color, #ffffff);
+            border: 1px solid var(--tg-theme-hint-color, #3a3a3c);
+        }
+        
+        /* Настройки */
         .setting-item {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 12px;
+            padding: 16px 0;
+            border-bottom: 1px solid var(--tg-theme-hint-color, #3a3a3c);
         }
         
+        .setting-item:last-child {
+            border-bottom: none;
+        }
+        
+        .setting-info {
+            flex: 1;
+        }
+        
+        .setting-title {
+            font-size: 17px;
+            font-weight: 600;
+            color: var(--tg-theme-text-color, #ffffff);
+            margin-bottom: 4px;
+        }
+        
+        .setting-description {
+            font-size: 14px;
+            color: var(--tg-theme-hint-color, #98989e);
+            padding-right: 20px;
+        }
+        
+        /* Switch */
         .switch {
             position: relative;
             display: inline-block;
             width: 52px;
-            height: 28px;
+            height: 32px;
+            flex-shrink: 0;
         }
         
         .switch input {
@@ -209,16 +321,16 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #ccc;
+            background-color: var(--tg-theme-hint-color, #3a3a3c);
             transition: .2s;
-            border-radius: 28px;
+            border-radius: 34px;
         }
         
         .slider:before {
             position: absolute;
             content: "";
-            height: 24px;
-            width: 24px;
+            height: 28px;
+            width: 28px;
             left: 2px;
             bottom: 2px;
             background-color: white;
@@ -227,31 +339,41 @@
         }
         
         input:checked + .slider {
-            background-color: #40a7e3;
+            background-color: var(--tg-theme-button-color, #40a7e3);
         }
         
         input:checked + .slider:before {
-            transform: translateX(24px);
+            transform: translateX(20px);
         }
         
+        /* Нижняя навигация - 3 кнопки */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: white;
+            background: var(--tg-theme-secondary-bg-color, #2c2c2e);
             display: flex;
             justify-content: space-around;
-            padding: 12px;
-            border-top: 1px solid #f0f0f0;
+            padding: 12px 16px;
+            padding-bottom: calc(12px + env(safe-area-inset-bottom));
+            border-top: 1px solid var(--tg-theme-hint-color, #3a3a3c);
+            backdrop-filter: blur(10px);
         }
         
         .nav-item {
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 4px;
+            gap: 6px;
             cursor: pointer;
+            padding: 8px 16px;
+            border-radius: 12px;
+            transition: background 0.1s;
+        }
+        
+        .nav-item:active {
+            background: var(--tg-theme-hint-color, #3a3a3c);
         }
         
         .nav-icon {
@@ -260,12 +382,17 @@
         
         .nav-label {
             font-size: 12px;
-            color: #666;
+            color: var(--tg-theme-hint-color, #98989e);
+            font-weight: 500;
         }
         
         .nav-item.active .nav-label {
-            color: #40a7e3;
-            font-weight: bold;
+            color: var(--tg-theme-button-color, #40a7e3);
+            font-weight: 600;
+        }
+        
+        .nav-item.active .nav-icon {
+            color: var(--tg-theme-button-color, #40a7e3);
         }
         
         .hidden {
@@ -274,11 +401,11 @@
     </style>
 </head>
 <body>
-    <!-- Профиль -->
+    <!-- ПРОФИЛЬ -->
     <div id="profile-section">
         <div class="header">
             <div>
-                <div style="font-size: 24px; font-weight: bold;">Профиль</div>
+                <div style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">Профиль</div>
                 <span class="level-badge" id="level">B1 🌳</span>
             </div>
             <div class="avatar">🎙</div>
@@ -294,7 +421,7 @@
                 <div class="stat-label">Диалогов</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="voice">0</div>
+                <div class="stat-value" id="voice">0.0</div>
                 <div class="stat-label">Минут</div>
             </div>
             <div class="stat-card">
@@ -305,17 +432,17 @@
         
         <div class="streak-card">
             <div class="streak-header">
-                <span style="font-size: 28px;">🔥</span>
+                <span class="streak-icon">🔥</span>
                 <h2>Серия</h2>
             </div>
             <div class="streak-numbers">
                 <div class="streak-item">
                     <div class="streak-count" id="currentStreak">0</div>
-                    <div>дней</div>
+                    <div class="streak-label">дней</div>
                 </div>
                 <div class="streak-item">
                     <div class="streak-count" id="longestStreak">0</div>
-                    <div>рекорд</div>
+                    <div class="streak-label">рекорд</div>
                 </div>
             </div>
         </div>
@@ -332,44 +459,47 @@
         </div>
     </div>
     
-    <!-- Рефералы -->
+    <!-- РЕФЕРАЛЫ -->
     <div id="referrals-section" class="hidden">
         <div class="section">
-            <div class="section-title">👥 Пригласи друзей</div>
-            <div style="margin-bottom: 16px;">
-                Отправь друзьям эту ссылку. За каждого друга, который начнет общаться, ты получишь +50 XP!
+            <div class="section-title">👥 Пригласить друзей</div>
+            <div style="color: var(--tg-theme-hint-color, #98989e); margin-bottom: 20px; font-size: 15px; line-height: 1.5;">
+                Отправь эту ссылку друзьям. За каждого друга, который начнет общаться, ты получишь <strong style="color: var(--tg-theme-button-color, #40a7e3);">+50 XP</strong>!
             </div>
             <div class="referral-link" id="referralLink">загрузка...</div>
-            <button onclick="copyReferralLink()" style="width: 100%; padding: 12px; background: #40a7e3; color: white; border: none; border-radius: 12px; font-size: 16px; margin-top: 8px;">
+            <button class="copy-button" onclick="copyReferralLink()">
                 📋 Копировать ссылку
             </button>
-            <div style="margin-top: 24px;">
-                <div style="font-size: 16px; font-weight: bold; margin-bottom: 12px;">Твои друзья:</div>
-                <div id="referralsCount">0</div>
+            <div class="friends-count" id="referralsCount">
+                🎉 У тебя пока нет друзей
             </div>
         </div>
     </div>
     
-    <!-- Настройки -->
+    <!-- НАСТРОЙКИ -->
     <div id="settings-section" class="hidden">
         <div class="section">
             <div class="section-title">⚙️ Настройки</div>
             
             <div class="setting-item">
-                <span>🔍 Исправлять ошибки</span>
+                <div class="setting-info">
+                    <div class="setting-title">Исправлять ошибки</div>
+                    <div class="setting-description">
+                        Бот будет мягко исправлять грамматические и орфографические ошибки
+                    </div>
+                </div>
                 <label class="switch">
                     <input type="checkbox" id="correctionsSwitch" checked onchange="toggleCorrections()">
                     <span class="slider"></span>
                 </label>
             </div>
             
-            <div style="margin-top: 20px; color: #666; font-size: 14px;">
-                Если включено — бот будет мягко исправлять грамматические ошибки в твоих сообщениях.
-            </div>
+            <!-- КНОПКА СМЕНИТЬ ЯЗЫК УДАЛЕНА ПОЛНОСТЬЮ -->
+            
         </div>
     </div>
     
-    <!-- Нижнее меню - 3 кнопки -->
+    <!-- НИЖНЕЕ МЕНЮ - 3 КНОПКИ -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="showSection('profile')">
             <span class="nav-icon">👤</span>
@@ -390,11 +520,16 @@
         tg.expand();
         tg.ready();
         
+        // Тёмная тема принудительно
+        tg.setHeaderColor('#1c1c1e');
+        tg.setBackgroundColor('#1c1c1e');
+        
         let currentDate = new Date();
         let currentYear = currentDate.getFullYear();
         let currentMonth = currentDate.getMonth();
         let userData = {};
         
+        // Переключение секций
         function showSection(section) {
             document.getElementById('profile-section').classList.add('hidden');
             document.getElementById('referrals-section').classList.add('hidden');
@@ -408,12 +543,13 @@
             } else if (section === 'referrals') {
                 document.getElementById('referrals-section').classList.remove('hidden');
                 document.querySelectorAll('.nav-item')[1].classList.add('active');
-            } else {
+            } else if (section === 'settings') {
                 document.getElementById('settings-section').classList.remove('hidden');
                 document.querySelectorAll('.nav-item')[2].classList.add('active');
             }
         }
         
+        // Переключение исправлений
         function toggleCorrections() {
             const isEnabled = document.getElementById('correctionsSwitch').checked;
             tg.sendData(JSON.stringify({
@@ -422,12 +558,18 @@
             }));
         }
         
+        // Копирование реферальной ссылки
         function copyReferralLink() {
             const link = document.getElementById('referralLink').textContent;
             navigator.clipboard.writeText(link);
-            tg.showPopup({message: '✅ Ссылка скопирована!'});
+            tg.showPopup({
+                title: 'Успешно',
+                message: '✅ Ссылка скопирована!',
+                buttons: [{type: 'ok'}]
+            });
         }
         
+        // Обновление UI
         function updateUI(data) {
             userData = data;
             
@@ -456,14 +598,25 @@
             
             // Рефералы
             if (data.referral_code) {
-                const refLink = `https://t.me/{(window.Telegram.WebApp.initDataUnsafe.user?.username ? '@' + window.Telegram.WebApp.initDataUnsafe.user.username : 'your_bot')}?start=ref_${data.referral_code}`;
+                const botUsername = window.Telegram.WebApp.initDataUnsafe.user?.username ? 
+                    window.Telegram.WebApp.initDataUnsafe.user.username : 'prestige046_bot';
+                const refLink = `https://t.me/${botUsername}?start=ref_${data.referral_code}`;
                 document.getElementById('referralLink').textContent = refLink;
             }
-            document.getElementById('referralsCount').innerHTML = `🎉 У тебя ${data.referrals_count || 0} друзей`;
+            
+            const referralsCount = data.referrals_count || 0;
+            if (referralsCount === 0) {
+                document.getElementById('referralsCount').innerHTML = '🎉 У тебя пока нет друзей';
+            } else if (referralsCount === 1) {
+                document.getElementById('referralsCount').innerHTML = '👥 1 друг · +50 XP';
+            } else {
+                document.getElementById('referralsCount').innerHTML = `👥 ${referralsCount} друзей · +${referralsCount * 50} XP`;
+            }
             
             renderCalendar(currentYear, currentMonth);
         }
         
+        // Календарь
         function renderCalendar(year, month) {
             const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
                                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
@@ -480,10 +633,12 @@
                 html += `<div class="weekday">${day}</div>`;
             });
             
+            // Пустые ячейки до первого дня
             for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
                 html += '<div class="day"></div>';
             }
             
+            // Дни месяца
             for (let day = 1; day <= daysInMonth; day++) {
                 let classes = ['day'];
                 
@@ -521,7 +676,7 @@
             renderCalendar(currentYear, currentMonth);
         }
         
-        // Запрашиваем данные
+        // Запрос данных
         tg.sendData(JSON.stringify({action: 'getUserData'}));
     </script>
 </body>
