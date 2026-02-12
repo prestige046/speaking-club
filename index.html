@@ -21,7 +21,7 @@
             min-height: 100vh;
         }
         
-        /* Профиль */
+        /* Профиль как на скрине */
         .profile-header {
             display: flex;
             align-items: center;
@@ -29,28 +29,18 @@
             margin-bottom: 24px;
         }
         
-        .profile-info {
-            display: flex;
-            flex-direction: column;
-        }
-        
         .profile-name {
             font-size: 28px;
             font-weight: 700;
-            margin-bottom: 4px;
         }
         
         .profile-stars {
             display: flex;
             align-items: center;
-            gap: 6px;
+            gap: 4px;
             color: #8e8e93;
             font-size: 15px;
-        }
-        
-        .star-icon {
-            color: #ffcc00;
-            font-size: 18px;
+            margin-top: 4px;
         }
         
         /* Статистика */
@@ -83,7 +73,7 @@
         }
         
         /* Стрейк */
-        .streak-section {
+        .streak-card {
             background: linear-gradient(135deg, #FF6B6B, #FF8E53);
             border-radius: 16px;
             padding: 20px;
@@ -91,14 +81,14 @@
             margin-bottom: 24px;
         }
         
-        .streak-title {
+        .streak-header {
             display: flex;
             align-items: center;
             gap: 8px;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
         }
         
-        .streak-title span {
+        .streak-header span {
             font-size: 20px;
             font-weight: 600;
         }
@@ -107,16 +97,16 @@
             font-size: 48px;
             font-weight: 700;
             line-height: 1;
-            margin-bottom: 4px;
         }
         
         .streak-label {
-            font-size: 14px;
+            font-size: 16px;
             opacity: 0.9;
+            margin-left: 8px;
         }
         
         /* Календарь */
-        .calendar-section {
+        .calendar-card {
             background: #ffffff;
             border-radius: 16px;
             padding: 20px;
@@ -166,99 +156,41 @@
             font-size: 13px;
             color: #8e8e93;
             padding: 8px 4px;
-            font-weight: 500;
         }
         
-        .weekday.sat, .weekday.sun {
+        .weekend {
             color: #ff6b6b;
         }
         
         .day {
-            padding: 10px 4px;
-            font-size: 15px;
-            border-radius: 50%;
             width: 40px;
             height: 40px;
             display: flex;
             align-items: center;
             justify-content: center;
             margin: 0 auto;
+            font-size: 15px;
+            border-radius: 50%;
         }
         
         .day.active {
             background: #40a7e3;
             color: white;
-            font-weight: 600;
         }
         
         .day.today {
             border: 2px solid #40a7e3;
-            background: transparent;
             color: #40a7e3;
             font-weight: 700;
         }
         
-        .day.sat, .day.sun {
+        .day.weekend {
             color: #ff6b6b;
         }
         
-        .day.active.sat, .day.active.sun {
+        .day.active.weekend {
             background: #40a7e3;
             color: white;
-        }
-        
-        /* Кнопки нижнего меню - КАК В CHATTY */
-        .bottom-nav {
-            position: fixed;
-            bottom: 0;
-            left: 0;
-            right: 0;
-            background: white;
-            display: flex;
-            justify-content: space-around;
-            padding: 10px 16px;
-            padding-bottom: calc(10px + env(safe-area-inset-bottom));
-            border-top: 1px solid #f0f0f0;
-        }
-        
-        .nav-item {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 4px;
-            cursor: pointer;
-            padding: 8px 16px;
-            border-radius: 12px;
-            background: transparent;
-            transition: all 0.2s;
-        }
-        
-        .nav-item:hover {
-            background: #f8f8f8;
-        }
-        
-        .nav-icon {
-            font-size: 22px;
-            color: #8e8e93;
-        }
-        
-        .nav-label {
-            font-size: 11px;
-            color: #8e8e93;
-            font-weight: 500;
-        }
-        
-        .nav-item.active {
-            background: #e8f2ff;
-        }
-        
-        .nav-item.active .nav-icon {
-            color: #40a7e3;
-        }
-        
-        .nav-item.active .nav-label {
-            color: #40a7e3;
-            font-weight: 600;
         }
         
         /* Секции */
@@ -275,7 +207,7 @@
             margin-bottom: 16px;
         }
         
-        /* Реферальная ссылка */
+        /* Рефералы */
         .referral-box {
             background: white;
             border: 1px solid #f0f0f0;
@@ -285,10 +217,9 @@
             font-size: 13px;
             word-break: break-all;
             margin: 16px 0;
-            color: #000000;
         }
         
-        .button {
+        .btn {
             background: #40a7e3;
             color: white;
             border: none;
@@ -298,17 +229,6 @@
             font-weight: 600;
             width: 100%;
             cursor: pointer;
-            transition: opacity 0.2s;
-        }
-        
-        .button:hover {
-            opacity: 0.9;
-        }
-        
-        .button.secondary {
-            background: #f8f8f8;
-            color: #000000;
-            border: 1px solid #f0f0f0;
         }
         
         /* Настройки */
@@ -335,7 +255,7 @@
             color: #8e8e93;
         }
         
-        /* Switch - iOS стиль */
+        /* Switch */
         .switch {
             position: relative;
             display: inline-block;
@@ -371,7 +291,6 @@
             background-color: white;
             transition: .2s;
             border-radius: 50%;
-            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
         }
         
         input:checked + .slider {
@@ -382,57 +301,90 @@
             transform: translateX(20px);
         }
         
-        .hidden {
-            display: none;
+        /* Нижнее меню как в Chatty */
+        .bottom-nav {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            background: white;
+            display: flex;
+            justify-content: space-around;
+            padding: 10px 16px;
+            padding-bottom: calc(10px + env(safe-area-inset-bottom));
+            border-top: 1px solid #f0f0f0;
         }
         
-        /* Пригласить друзей */
-        .invite-stats {
+        .nav-item {
             display: flex;
-            justify-content: space-between;
-            margin-top: 16px;
-            padding: 12px;
-            background: white;
+            flex-direction: column;
+            align-items: center;
+            gap: 4px;
+            cursor: pointer;
+            padding: 8px 16px;
             border-radius: 12px;
-            border: 1px solid #f0f0f0;
+        }
+        
+        .nav-icon {
+            font-size: 22px;
+            color: #8e8e93;
+        }
+        
+        .nav-label {
+            font-size: 11px;
+            color: #8e8e93;
+        }
+        
+        .nav-item.active {
+            background: #e8f2ff;
+        }
+        
+        .nav-item.active .nav-icon,
+        .nav-item.active .nav-label {
+            color: #40a7e3;
+            font-weight: 600;
+        }
+        
+        .hidden {
+            display: none;
         }
     </style>
 </head>
 <body>
-    <!-- ПРОФИЛЬ (КАК НА СКРИНЕ) -->
+    <!-- ПРОФИЛЬ (ТОЧНО КАК НА СКРИНЕ) -->
     <div id="profile-section">
         <div class="profile-header">
-            <div class="profile-info">
-                <span class="profile-name">Roman</span>
-                <span class="profile-stars">
-                    <span class="star-icon">⭐</span> 11
-                </span>
+            <div>
+                <div class="profile-name">Roman</div>
+                <div class="profile-stars">
+                    <span style="color: #ffcc00;">⭐</span> 11
+                </div>
             </div>
         </div>
         
         <div class="stats-row">
             <div class="stat-item">
-                <span class="stat-label">Invite Friends</span>
-                <span class="stat-value" id="inviteCount">0</span>
+                <div class="stat-label">Invite Friends</div>
+                <div class="stat-value" id="inviteCount">0</div>
             </div>
             <div class="stat-item">
-                <span class="stat-label">Share Profile</span>
-                <span class="stat-value" id="shareCount">0</span>
+                <div class="stat-label">Share Profile</div>
+                <div class="stat-value" id="shareCount">0</div>
             </div>
         </div>
         
-        <div class="streak-section">
-            <div class="streak-title">
+        <div class="streak-card">
+            <div class="streak-header">
                 <span>🔥</span>
                 <span>Streak</span>
             </div>
-            <div style="display: flex; align-items: baseline; gap: 8px;">
+            <div>
                 <span class="streak-count" id="currentStreak">0</span>
                 <span class="streak-label">days streak</span>
             </div>
         </div>
         
-        <div class="calendar-section">
+        <div class="calendar-card">
             <div class="calendar-header">
                 <span class="calendar-title" id="monthYear">февраль 2026 г.</span>
                 <div class="calendar-nav">
@@ -448,28 +400,27 @@
     <div id="referrals-section" class="hidden">
         <div class="section">
             <div class="section-title">👥 Invite Friends</div>
-            <div style="color: #8e8e93; font-size: 14px; margin-bottom: 16px;">
+            <div style="color: #8e8e93; margin-bottom: 16px;">
                 Share your link and get +50 XP for each friend
             </div>
             <div class="referral-box" id="referralLink">Loading...</div>
-            <button class="button" onclick="copyReferralLink()">📋 Copy Link</button>
-            
-            <div class="invite-stats">
-                <span>Friends joined</span>
+            <button class="btn" onclick="copyReferralLink()">📋 Copy Link</button>
+            <div style="margin-top: 16px; padding: 12px; background: white; border-radius: 12px; border: 1px solid #f0f0f0;">
+                <span>Friends joined: </span>
                 <span style="font-weight: 600; color: #40a7e3;" id="referralsCount">0</span>
             </div>
         </div>
     </div>
     
-    <!-- НАСТРОЙКИ -->
+    <!-- НАСТРОЙКИ (РУССКИЙ ЯЗЫК) -->
     <div id="settings-section" class="hidden">
         <div class="section">
-            <div class="section-title">⚙️ Settings</div>
+            <div class="section-title">⚙️ Настройки</div>
             
             <div class="setting-row">
                 <div>
-                    <div class="setting-title">Fix mistakes</div>
-                    <div class="setting-desc">Auto-correction of grammar</div>
+                    <div class="setting-title">Исправлять ошибки</div>
+                    <div class="setting-desc">Автоматическое исправление грамматики</div>
                 </div>
                 <label class="switch">
                     <input type="checkbox" id="correctionsSwitch">
@@ -479,29 +430,29 @@
             
             <div class="setting-row">
                 <div>
-                    <div class="setting-title">📥 Export chats</div>
-                    <div class="setting-desc">Save conversation history</div>
+                    <div class="setting-title">📥 Выгрузить диалоги</div>
+                    <div class="setting-desc">Сохранить историю разговоров</div>
                 </div>
-                <button onclick="exportChat()" style="background: #40a7e3; color: white; border: none; padding: 8px 16px; border-radius: 10px; font-size: 14px; font-weight: 600; cursor: pointer;">
-                    Download
+                <button onclick="exportChat()" style="background: #40a7e3; color: white; border: none; padding: 8px 16px; border-radius: 10px; font-size: 14px; cursor: pointer;">
+                    Скачать
                 </button>
             </div>
         </div>
     </div>
     
-    <!-- НИЖНЕЕ МЕНЮ (КАК НА СКРИНЕ) -->
+    <!-- НИЖНЕЕ МЕНЮ -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="showSection('profile')">
             <span class="nav-icon">👤</span>
-            <span class="nav-label">Profile</span>
+            <span class="nav-label">Профиль</span>
         </div>
         <div class="nav-item" onclick="showSection('referrals')">
             <span class="nav-icon">👥</span>
-            <span class="nav-label">Invite</span>
+            <span class="nav-label">Рефералы</span>
         </div>
         <div class="nav-item" onclick="showSection('settings')">
             <span class="nav-icon">⚙️</span>
-            <span class="nav-label">Settings</span>
+            <span class="nav-label">Настройки</span>
         </div>
     </div>
     
@@ -559,7 +510,7 @@
                 action: 'exportChat'
             }));
             tg.showPopup({
-                message: '📥 Generating chat history...',
+                message: '📥 Генерирую файл с историей...',
                 buttons: [{type: 'ok'}]
             });
         }
@@ -568,7 +519,7 @@
             const link = document.getElementById('referralLink').textContent;
             navigator.clipboard.writeText(link).then(() => {
                 tg.showPopup({
-                    message: '✅ Link copied!',
+                    message: '✅ Ссылка скопирована!',
                     buttons: [{type: 'ok'}]
                 });
             });
@@ -577,12 +528,12 @@
         function updateUI(data) {
             userData = data;
             
-            // Профиль
             document.getElementById('inviteCount').innerText = data.referrals_count || 0;
             document.getElementById('shareCount').innerText = data.referrals_count || 0;
             document.getElementById('currentStreak').innerText = data.currentStreak || 0;
+            document.getElementById('referralsCount').innerText = data.referrals_count || 0;
             
-            // Настройки
+            // Настройки - переключатель
             const switchEl = document.getElementById('correctionsSwitch');
             if (data.corrections !== undefined) {
                 switchEl.checked = data.corrections;
@@ -590,15 +541,12 @@
             switchEl.removeEventListener('change', toggleCorrections);
             switchEl.addEventListener('change', toggleCorrections);
             
-            // Рефералы
+            // Реферальная ссылка
             if (data.referral_code) {
                 const botUsername = 'prestige046_bot';
                 const refLink = `https://t.me/${botUsername}?start=ref_${data.referral_code}`;
                 document.getElementById('referralLink').innerText = refLink;
             }
-            
-            const referralsCount = data.referrals_count || 0;
-            document.getElementById('referralsCount').innerText = referralsCount;
             
             renderCalendar(currentYear, currentMonth);
         }
@@ -606,7 +554,7 @@
         function renderCalendar(year, month) {
             const monthNames = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь',
                                'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
-            document.getElementById('monthYear').innerHTML = `${monthNames[month]} ${year} г.`;
+            document.getElementById('monthYear').innerText = `${monthNames[month]} ${year} г.`;
             
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
@@ -616,34 +564,29 @@
             const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
             
             weekdays.forEach((day, index) => {
-                const classes = ['weekday'];
-                if (index === 5 || index === 6) classes.push('sat', 'sun');
-                html += `<div class="${classes.join(' ')}">${day}</div>`;
+                const weekendClass = (index === 5 || index === 6) ? 'weekend' : '';
+                html += `<div class="weekday ${weekendClass}">${day}</div>`;
             });
             
-            // Пустые ячейки до первого дня
+            // Пустые ячейки
             for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
                 html += '<div></div>';
             }
             
             // Дни месяца
             for (let day = 1; day <= daysInMonth; day++) {
-                let classes = ['day'];
-                
                 const date = new Date(year, month, day);
                 const weekday = date.getDay();
+                const isWeekend = (weekday === 0 || weekday === 6);
                 
-                if (weekday === 0 || weekday === 6) {
-                    classes.push('sat', 'sun');
-                }
+                let classes = ['day'];
+                if (isWeekend) classes.push('weekend');
+                if (userData.activeDays && userData.activeDays.includes(day)) classes.push('active');
                 
-                if (userData.activeDays && userData.activeDays.includes(day)) {
-                    classes.push('active');
-                }
-                
-                if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
-                    classes.push('today');
-                }
+                const isToday = (year === today.getFullYear() && 
+                               month === today.getMonth() && 
+                               day === today.getDate());
+                if (isToday) classes.push('today');
                 
                 html += `<div class="${classes.join(' ')}">${day}</div>`;
             }
