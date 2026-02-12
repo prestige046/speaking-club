@@ -487,4 +487,42 @@
             for (let day = 1; day <= daysInMonth; day++) {
                 let classes = ['day'];
                 
-                if (userData.activeDays &&
+                if (userData.activeDays && userData.activeDays.includes(day)) {
+                    classes.push('active');
+                }
+                
+                if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+                    classes.push('today');
+                }
+                
+                html += `<div class="${classes.join(' ')}">${day}</div>`;
+            }
+            
+            document.getElementById('calendarGrid').innerHTML = html;
+        }
+        
+        function prevMonth() {
+            if (currentMonth === 0) {
+                currentYear--;
+                currentMonth = 11;
+            } else {
+                currentMonth--;
+            }
+            renderCalendar(currentYear, currentMonth);
+        }
+        
+        function nextMonth() {
+            if (currentMonth === 11) {
+                currentYear++;
+                currentMonth = 0;
+            } else {
+                currentMonth++;
+            }
+            renderCalendar(currentYear, currentMonth);
+        }
+        
+        // Запрашиваем данные
+        tg.sendData(JSON.stringify({action: 'getUserData'}));
+    </script>
+</body>
+</html>
