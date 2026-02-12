@@ -19,24 +19,28 @@
             padding: 16px;
         }
         
-        .profile-header {
+        .header {
             display: flex;
             align-items: center;
             justify-content: space-between;
             margin-bottom: 24px;
         }
         
+        .title {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
         .avatar {
-            width: 64px;
-            height: 64px;
+            width: 48px;
+            height: 48px;
             border-radius: 50%;
             background: #40a7e3;
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
-            font-size: 32px;
-            font-weight: bold;
+            font-size: 24px;
         }
         
         .stats-grid {
@@ -65,7 +69,7 @@
             color: #666;
         }
         
-        .streak-section {
+        .streak-card {
             background: linear-gradient(135deg, #FF6B6B, #FF8E53);
             padding: 20px;
             border-radius: 16px;
@@ -80,13 +84,9 @@
             margin-bottom: 16px;
         }
         
-        .streak-icon {
-            font-size: 28px;
-        }
-        
         .streak-numbers {
             display: flex;
-            justify-content: space-between;
+            justify-content: space-around;
         }
         
         .streak-item {
@@ -98,7 +98,7 @@
             font-weight: bold;
         }
         
-        .calendar {
+        .calendar-section {
             background: #f0f0f0;
             padding: 16px;
             border-radius: 12px;
@@ -112,6 +112,19 @@
             margin-bottom: 16px;
         }
         
+        .calendar-nav {
+            display: flex;
+            gap: 16px;
+        }
+        
+        .nav-button {
+            background: none;
+            border: none;
+            font-size: 20px;
+            cursor: pointer;
+            padding: 4px 8px;
+        }
+        
         .calendar-grid {
             display: grid;
             grid-template-columns: repeat(7, 1fr);
@@ -119,21 +132,36 @@
             text-align: center;
         }
         
-        .calendar-weekday {
+        .weekday {
             font-size: 12px;
             color: #666;
             padding: 4px;
         }
         
-        .calendar-day {
+        .day {
             padding: 8px 4px;
             border-radius: 8px;
             font-size: 14px;
         }
         
-        .calendar-day.active {
+        .day.active {
             background: #40a7e3;
             color: white;
+        }
+        
+        .day.today {
+            border: 2px solid #40a7e3;
+            font-weight: bold;
+        }
+        
+        .level-badge {
+            display: inline-block;
+            padding: 4px 12px;
+            background: #40a7e3;
+            color: white;
+            border-radius: 20px;
+            font-size: 14px;
+            margin-top: 8px;
         }
         
         .menu-grid {
@@ -161,61 +189,47 @@
         
         .menu-label {
             font-size: 12px;
-            text-align: center;
-        }
-        
-        .level-badge {
-            display: inline-block;
-            padding: 4px 12px;
-            background: #40a7e3;
-            color: white;
-            border-radius: 20px;
-            font-size: 14px;
-            margin-top: 8px;
         }
     </style>
 </head>
 <body>
     <div id="app">
-        <!-- Профиль -->
-        <div class="profile-header">
+        <div class="header">
             <div>
-                <h1 id="userName">Roman</h1>
-                <span class="level-badge" id="userLevel">B1 🌳</span>
+                <div class="title">Разговорный клуб</div>
+                <span class="level-badge" id="level">B1 🌳</span>
             </div>
-            <div class="avatar" id="userAvatar">🎙</div>
+            <div class="avatar">🎙</div>
         </div>
         
-        <!-- Статистика -->
         <div class="stats-grid">
             <div class="stat-card">
-                <div class="stat-value" id="userXP">0</div>
+                <div class="stat-value" id="xp">0</div>
                 <div class="stat-label">Опыт</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="userMessages">0</div>
-                <div class="stat-label">Сообщений</div>
+                <div class="stat-value" id="messages">0</div>
+                <div class="stat-label">Диалогов</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="userVoice">0</div>
+                <div class="stat-value" id="voice">0</div>
                 <div class="stat-label">Минут</div>
             </div>
             <div class="stat-card">
-                <div class="stat-value" id="userLang">🇬🇧</div>
+                <div class="stat-value" id="lang">🇬🇧</div>
                 <div class="stat-label">Язык</div>
             </div>
         </div>
         
-        <!-- Стрейк -->
-        <div class="streak-section">
+        <div class="streak-card">
             <div class="streak-header">
-                <span class="streak-icon">🔥</span>
-                <h2>Твой стрейк</h2>
+                <span style="font-size: 28px;">🔥</span>
+                <h2>Серия</h2>
             </div>
             <div class="streak-numbers">
                 <div class="streak-item">
                     <div class="streak-count" id="currentStreak">0</div>
-                    <div>текущий</div>
+                    <div>дней</div>
                 </div>
                 <div class="streak-item">
                     <div class="streak-count" id="longestStreak">0</div>
@@ -224,18 +238,17 @@
             </div>
         </div>
         
-        <!-- Календарь -->
-        <div class="calendar">
+        <div class="calendar-section">
             <div class="calendar-header">
-                <h3 id="calendarMonth">Февраль 2026</h3>
-                <span>📅</span>
+                <h3 id="monthYear">Февраль 2026</h3>
+                <div class="calendar-nav">
+                    <button class="nav-button" onclick="prevMonth()">←</button>
+                    <button class="nav-button" onclick="nextMonth()">→</button>
+                </div>
             </div>
-            <div class="calendar-grid" id="calendarGrid">
-                <!-- Сюда JavaScript подставит дни -->
-            </div>
+            <div class="calendar-grid" id="calendarGrid"></div>
         </div>
         
-        <!-- Меню с иконками -->
         <div class="menu-grid">
             <button class="menu-item" onclick="tg.close()">
                 <span class="menu-icon">🔙</span>
@@ -257,65 +270,94 @@
     </div>
     
     <script>
-        // Подключаемся к Telegram
         let tg = window.Telegram.WebApp;
-        tg.expand(); // Разворачиваем на весь экран
+        tg.expand();
         tg.ready();
         
-        // Получаем данные от бота
-        tg.onEvent('webAppData', function(data) {
-            let userData = JSON.parse(data.data);
-            updateUI(userData);
-        });
+        let currentDate = new Date();
+        let currentYear = currentDate.getFullYear();
+        let currentMonth = currentDate.getMonth();
         
-        // Функция обновления интерфейса
+        let userData = {};
+        
         function updateUI(data) {
-            document.getElementById('userXP').textContent = data.xp || 0;
-            document.getElementById('userMessages').textContent = data.messages || 0;
-            document.getElementById('userVoice').textContent = (data.voice || 0).toFixed(1);
-            document.getElementById('userLang').textContent = data.lang || '🇬🇧';
+            userData = data;
+            document.getElementById('xp').textContent = data.xp || 0;
+            document.getElementById('messages').textContent = data.messages || 0;
+            document.getElementById('voice').textContent = (data.voice || 0).toFixed(1);
+            document.getElementById('lang').textContent = data.lang || '🇬🇧';
             document.getElementById('currentStreak').textContent = data.currentStreak || 0;
             document.getElementById('longestStreak').textContent = data.longestStreak || 0;
             
-            // Генерируем календарь
-            generateCalendar(data.activeDays || []);
+            let xp = data.xp || 0;
+            let level = 'A1 🌱';
+            if (xp >= 100) level = 'A2 🌿';
+            if (xp >= 300) level = 'B1 🌳';
+            if (xp >= 600) level = 'B2 🌲';
+            if (xp >= 1000) level = 'C1 🌴';
+            if (xp >= 1500) level = 'C2 🏆';
+            document.getElementById('level').textContent = level;
+            
+            renderCalendar(currentYear, currentMonth);
         }
         
-        // Функция календаря
-        function generateCalendar(activeDays) {
-            const now = new Date();
-            const year = now.getFullYear();
-            const month = now.getMonth();
-            
+        function renderCalendar(year, month) {
             const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
                                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
-            document.getElementById('calendarMonth').textContent = `${monthNames[month]} ${year}`;
+            document.getElementById('monthYear').textContent = `${monthNames[month]} ${year}`;
             
             const firstDay = new Date(year, month, 1).getDay();
             const daysInMonth = new Date(year, month + 1, 0).getDate();
+            const today = new Date();
             
-            let calendarHTML = '';
+            let html = '';
             const weekdays = ['Пн', 'Вт', 'Ср', 'Чт', 'Пт', 'Сб', 'Вс'];
             
             weekdays.forEach(day => {
-                calendarHTML += `<div class="calendar-weekday">${day}</div>`;
+                html += `<div class="weekday">${day}</div>`;
             });
             
-            // Пустые ячейки до первого дня
             for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
-                calendarHTML += '<div class="calendar-day"></div>';
+                html += '<div class="day"></div>';
             }
             
-            // Дни месяца
             for (let day = 1; day <= daysInMonth; day++) {
-                const isActive = activeDays.includes(day);
-                calendarHTML += `<div class="calendar-day ${isActive ? 'active' : ''}">${day}</div>`;
+                let classes = ['day'];
+                
+                if (userData.activeDays && userData.activeDays.includes(day)) {
+                    classes.push('active');
+                }
+                
+                if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
+                    classes.push('today');
+                }
+                
+                html += `<div class="${classes.join(' ')}">${day}</div>`;
             }
             
-            document.getElementById('calendarGrid').innerHTML = calendarHTML;
+            document.getElementById('calendarGrid').innerHTML = html;
         }
         
-        // Просим бота прислать данные
+        function prevMonth() {
+            if (currentMonth === 0) {
+                currentYear--;
+                currentMonth = 11;
+            } else {
+                currentMonth--;
+            }
+            renderCalendar(currentYear, currentMonth);
+        }
+        
+        function nextMonth() {
+            if (currentMonth === 11) {
+                currentYear++;
+                currentMonth = 0;
+            } else {
+                currentMonth++;
+            }
+            renderCalendar(currentYear, currentMonth);
+        }
+        
         tg.sendData(JSON.stringify({action: 'getUserData'}));
     </script>
 </body>
