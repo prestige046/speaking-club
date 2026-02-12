@@ -14,7 +14,7 @@
         }
         
         body {
-            background: var(--tg-theme-bg-color, #1c1c1e);
+            background: var(--tg-theme-bg-color, #0f0f0f);
             color: var(--tg-theme-text-color, #ffffff);
             padding: 16px;
             padding-bottom: 80px;
@@ -22,39 +22,38 @@
         }
         
         /* Профиль */
-        .header {
+        .profile-header {
+            background: var(--tg-theme-secondary-bg-color, #1a1a1a);
+            border-radius: 20px;
+            padding: 20px;
+            margin-bottom: 20px;
             display: flex;
             align-items: center;
             justify-content: space-between;
-            margin-bottom: 24px;
-            background: var(--tg-theme-secondary-bg-color, #2c2c2e);
-            padding: 20px;
-            border-radius: 16px;
+            border: 1px solid var(--tg-theme-hint-color, #2a2a2a);
         }
         
         .avatar {
             width: 72px;
             height: 72px;
             border-radius: 50%;
-            background: linear-gradient(135deg, #40a7e3, #2c6fb0);
+            background: linear-gradient(135deg, #2a7faa, #1f4e7a);
             display: flex;
             align-items: center;
             justify-content: center;
             color: white;
             font-size: 36px;
-            box-shadow: 0 4px 12px rgba(64, 167, 227, 0.3);
         }
         
         .level-badge {
             display: inline-block;
             padding: 6px 16px;
-            background: var(--tg-theme-button-color, #40a7e3);
+            background: var(--tg-theme-button-color, #2a7faa);
             color: white;
             border-radius: 20px;
             font-size: 14px;
             font-weight: 600;
-            margin-top: 12px;
-            box-shadow: 0 2px 8px rgba(64, 167, 227, 0.2);
+            margin-top: 8px;
         }
         
         /* Сетка статистики */
@@ -62,42 +61,38 @@
             display: grid;
             grid-template-columns: repeat(2, 1fr);
             gap: 12px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
         }
         
         .stat-card {
-            background: var(--tg-theme-secondary-bg-color, #2c2c2e);
+            background: var(--tg-theme-secondary-bg-color, #1a1a1a);
             padding: 18px;
             border-radius: 16px;
             text-align: center;
-            transition: transform 0.1s;
-        }
-        
-        .stat-card:active {
-            transform: scale(0.98);
+            border: 1px solid var(--tg-theme-hint-color, #2a2a2a);
         }
         
         .stat-value {
             font-size: 28px;
             font-weight: bold;
-            color: var(--tg-theme-button-color, #40a7e3);
+            color: var(--tg-theme-button-color, #2a7faa);
             margin-bottom: 6px;
         }
         
         .stat-label {
             font-size: 13px;
-            color: var(--tg-theme-hint-color, #98989e);
+            color: var(--tg-theme-hint-color, #8e8e93);
             font-weight: 500;
         }
         
         /* Стрейк */
         .streak-card {
-            background: linear-gradient(135deg, #FF6B6B, #FF8E53);
+            background: linear-gradient(135deg, #2a7faa, #1f4e7a);
             padding: 24px;
             border-radius: 20px;
             color: white;
-            margin-bottom: 24px;
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.3);
+            margin-bottom: 20px;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .streak-header {
@@ -139,10 +134,11 @@
         
         /* Календарь */
         .calendar-section {
-            background: var(--tg-theme-secondary-bg-color, #2c2c2e);
+            background: var(--tg-theme-secondary-bg-color, #1a1a1a);
             padding: 20px;
             border-radius: 20px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--tg-theme-hint-color, #2a2a2a);
         }
         
         .calendar-header {
@@ -160,11 +156,11 @@
         
         .calendar-nav {
             display: flex;
-            gap: 16px;
+            gap: 12px;
         }
         
         .nav-button {
-            background: var(--tg-theme-button-color, #40a7e3);
+            background: var(--tg-theme-button-color, #2a7faa);
             border: none;
             color: white;
             font-size: 18px;
@@ -172,11 +168,7 @@
             padding: 8px 16px;
             border-radius: 12px;
             font-weight: 600;
-            transition: opacity 0.1s;
-        }
-        
-        .nav-button:active {
-            opacity: 0.7;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .calendar-grid {
@@ -188,7 +180,7 @@
         
         .weekday {
             font-size: 13px;
-            color: var(--tg-theme-hint-color, #98989e);
+            color: var(--tg-theme-hint-color, #8e8e93);
             padding: 8px 4px;
             font-weight: 500;
         }
@@ -202,23 +194,24 @@
         }
         
         .day.active {
-            background: var(--tg-theme-button-color, #40a7e3);
+            background: var(--tg-theme-button-color, #2a7faa);
             color: white;
             font-weight: 600;
         }
         
         .day.today {
-            border: 2px solid var(--tg-theme-button-color, #40a7e3);
+            border: 2px solid var(--tg-theme-button-color, #2a7faa);
             background: transparent;
             font-weight: 700;
         }
         
         /* Секции */
         .section {
-            background: var(--tg-theme-secondary-bg-color, #2c2c2e);
+            background: var(--tg-theme-secondary-bg-color, #1a1a1a);
             padding: 24px;
             border-radius: 20px;
-            margin-bottom: 24px;
+            margin-bottom: 20px;
+            border: 1px solid var(--tg-theme-hint-color, #2a2a2a);
         }
         
         .section-title {
@@ -230,43 +223,39 @@
         
         /* Рефералы */
         .referral-link {
-            background: var(--tg-theme-bg-color, #1c1c1e);
+            background: var(--tg-theme-bg-color, #0f0f0f);
             padding: 16px;
             border-radius: 14px;
             font-family: monospace;
             margin: 16px 0;
             word-break: break-all;
             color: var(--tg-theme-text-color, #ffffff);
-            border: 1px solid var(--tg-theme-hint-color, #3a3a3c);
+            border: 1px solid var(--tg-theme-hint-color, #2a2a2a);
             font-size: 14px;
         }
         
-        .copy-button {
+        .action-button {
             width: 100%;
             padding: 16px;
-            background: var(--tg-theme-button-color, #40a7e3);
+            background: var(--tg-theme-button-color, #2a7faa);
             color: white;
             border: none;
             border-radius: 16px;
             font-size: 16px;
             font-weight: 600;
             cursor: pointer;
-            transition: opacity 0.1s;
             margin-top: 8px;
-        }
-        
-        .copy-button:active {
-            opacity: 0.7;
+            border: 1px solid rgba(255, 255, 255, 0.1);
         }
         
         .friends-count {
-            margin-top: 24px;
+            margin-top: 20px;
             padding: 16px;
-            background: var(--tg-theme-bg-color, #1c1c1e);
+            background: var(--tg-theme-bg-color, #0f0f0f);
             border-radius: 14px;
-            font-size: 16px;
+            font-size: 15px;
             color: var(--tg-theme-text-color, #ffffff);
-            border: 1px solid var(--tg-theme-hint-color, #3a3a3c);
+            border: 1px solid var(--tg-theme-hint-color, #2a2a2a);
         }
         
         /* Настройки */
@@ -275,7 +264,7 @@
             align-items: center;
             justify-content: space-between;
             padding: 16px 0;
-            border-bottom: 1px solid var(--tg-theme-hint-color, #3a3a3c);
+            border-bottom: 1px solid var(--tg-theme-hint-color, #2a2a2a);
         }
         
         .setting-item:last-child {
@@ -295,7 +284,7 @@
         
         .setting-description {
             font-size: 14px;
-            color: var(--tg-theme-hint-color, #98989e);
+            color: var(--tg-theme-hint-color, #8e8e93);
             padding-right: 20px;
         }
         
@@ -339,25 +328,25 @@
         }
         
         input:checked + .slider {
-            background-color: var(--tg-theme-button-color, #40a7e3);
+            background-color: var(--tg-theme-button-color, #2a7faa);
         }
         
         input:checked + .slider:before {
             transform: translateX(20px);
         }
         
-        /* Нижняя навигация - 3 кнопки */
+        /* Нижняя навигация */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: var(--tg-theme-secondary-bg-color, #2c2c2e);
+            background: var(--tg-theme-secondary-bg-color, #1a1a1a);
             display: flex;
             justify-content: space-around;
             padding: 12px 16px;
             padding-bottom: calc(12px + env(safe-area-inset-bottom));
-            border-top: 1px solid var(--tg-theme-hint-color, #3a3a3c);
+            border-top: 1px solid var(--tg-theme-hint-color, #2a2a2a);
             backdrop-filter: blur(10px);
         }
         
@@ -369,30 +358,22 @@
             cursor: pointer;
             padding: 8px 16px;
             border-radius: 12px;
-            transition: background 0.1s;
-        }
-        
-        .nav-item:active {
-            background: var(--tg-theme-hint-color, #3a3a3c);
         }
         
         .nav-icon {
             font-size: 24px;
+            color: var(--tg-theme-hint-color, #8e8e93);
         }
         
         .nav-label {
             font-size: 12px;
-            color: var(--tg-theme-hint-color, #98989e);
+            color: var(--tg-theme-hint-color, #8e8e93);
             font-weight: 500;
         }
         
+        .nav-item.active .nav-icon,
         .nav-item.active .nav-label {
-            color: var(--tg-theme-button-color, #40a7e3);
-            font-weight: 600;
-        }
-        
-        .nav-item.active .nav-icon {
-            color: var(--tg-theme-button-color, #40a7e3);
+            color: var(--tg-theme-button-color, #2a7faa);
         }
         
         .hidden {
@@ -403,9 +384,9 @@
 <body>
     <!-- ПРОФИЛЬ -->
     <div id="profile-section">
-        <div class="header">
+        <div class="profile-header">
             <div>
-                <div style="font-size: 28px; font-weight: 700; margin-bottom: 8px;">Профиль</div>
+                <div style="font-size: 28px; font-weight: 700; margin-bottom: 8px; color: var(--tg-theme-text-color, #ffffff);">Профиль</div>
                 <span class="level-badge" id="level">B1 🌳</span>
             </div>
             <div class="avatar">🎙</div>
@@ -463,11 +444,11 @@
     <div id="referrals-section" class="hidden">
         <div class="section">
             <div class="section-title">👥 Пригласить друзей</div>
-            <div style="color: var(--tg-theme-hint-color, #98989e); margin-bottom: 20px; font-size: 15px; line-height: 1.5;">
-                Отправь эту ссылку друзьям. За каждого друга, который начнет общаться, ты получишь <strong style="color: var(--tg-theme-button-color, #40a7e3);">+50 XP</strong>!
+            <div style="color: var(--tg-theme-hint-color, #8e8e93); margin-bottom: 20px; font-size: 15px; line-height: 1.5;">
+                Отправь эту ссылку друзьям. За каждого друга, который начнет общаться, ты получишь <strong style="color: var(--tg-theme-button-color, #2a7faa);">+50 XP</strong>!
             </div>
             <div class="referral-link" id="referralLink">загрузка...</div>
-            <button class="copy-button" onclick="copyReferralLink()">
+            <button class="action-button" onclick="copyReferralLink()">
                 📋 Копировать ссылку
             </button>
             <div class="friends-count" id="referralsCount">
@@ -494,12 +475,21 @@
                 </label>
             </div>
             
-            <!-- КНОПКА СМЕНИТЬ ЯЗЫК УДАЛЕНА ПОЛНОСТЬЮ -->
-            
+            <div class="setting-item">
+                <div class="setting-info">
+                    <div class="setting-title">📥 Выгрузка диалогов</div>
+                    <div class="setting-description">
+                        Сохранить историю твоих разговоров в текстовый файл
+                    </div>
+                </div>
+                <button onclick="exportChat()" style="background: var(--tg-theme-button-color, #2a7faa); color: white; border: none; padding: 8px 16px; border-radius: 12px; font-size: 14px; font-weight: 600; cursor: pointer;">
+                    Скачать
+                </button>
+            </div>
         </div>
     </div>
     
-    <!-- НИЖНЕЕ МЕНЮ - 3 КНОПКИ -->
+    <!-- НИЖНЕЕ МЕНЮ -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="showSection('profile')">
             <span class="nav-icon">👤</span>
@@ -520,21 +510,19 @@
         tg.expand();
         tg.ready();
         
-        // Тёмная тема принудительно
-        tg.setHeaderColor('#1c1c1e');
-        tg.setBackgroundColor('#1c1c1e');
+        // Тёмная тема
+        tg.setHeaderColor('#0f0f0f');
+        tg.setBackgroundColor('#0f0f0f');
         
         let currentDate = new Date();
         let currentYear = currentDate.getFullYear();
         let currentMonth = currentDate.getMonth();
         let userData = {};
         
-        // Переключение секций
         function showSection(section) {
             document.getElementById('profile-section').classList.add('hidden');
             document.getElementById('referrals-section').classList.add('hidden');
             document.getElementById('settings-section').classList.add('hidden');
-            
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             
             if (section === 'profile') {
@@ -549,7 +537,6 @@
             }
         }
         
-        // Переключение исправлений
         function toggleCorrections() {
             const isEnabled = document.getElementById('correctionsSwitch').checked;
             tg.sendData(JSON.stringify({
@@ -558,22 +545,24 @@
             }));
         }
         
-        // Копирование реферальной ссылки
+        function exportChat() {
+            tg.sendData(JSON.stringify({
+                action: 'exportChat'
+            }));
+        }
+        
         function copyReferralLink() {
             const link = document.getElementById('referralLink').textContent;
             navigator.clipboard.writeText(link);
             tg.showPopup({
-                title: 'Успешно',
                 message: '✅ Ссылка скопирована!',
                 buttons: [{type: 'ok'}]
             });
         }
         
-        // Обновление UI
         function updateUI(data) {
             userData = data;
             
-            // Профиль
             document.getElementById('xp').textContent = data.xp || 0;
             document.getElementById('messages').textContent = data.messages || 0;
             document.getElementById('voice').textContent = (data.voice || 0).toFixed(1);
@@ -581,7 +570,6 @@
             document.getElementById('currentStreak').textContent = data.currentStreak || 0;
             document.getElementById('longestStreak').textContent = data.longestStreak || 0;
             
-            // Уровень
             let xp = data.xp || 0;
             let level = 'A1 🌱';
             if (xp >= 100) level = 'A2 🌿';
@@ -591,15 +579,12 @@
             if (xp >= 1500) level = 'C2 🏆';
             document.getElementById('level').textContent = level;
             
-            // Настройки
             if (data.corrections !== undefined) {
                 document.getElementById('correctionsSwitch').checked = data.corrections;
             }
             
-            // Рефералы
             if (data.referral_code) {
-                const botUsername = window.Telegram.WebApp.initDataUnsafe.user?.username ? 
-                    window.Telegram.WebApp.initDataUnsafe.user.username : 'prestige046_bot';
+                const botUsername = 'prestige046_bot';
                 const refLink = `https://t.me/${botUsername}?start=ref_${data.referral_code}`;
                 document.getElementById('referralLink').textContent = refLink;
             }
@@ -607,8 +592,6 @@
             const referralsCount = data.referrals_count || 0;
             if (referralsCount === 0) {
                 document.getElementById('referralsCount').innerHTML = '🎉 У тебя пока нет друзей';
-            } else if (referralsCount === 1) {
-                document.getElementById('referralsCount').innerHTML = '👥 1 друг · +50 XP';
             } else {
                 document.getElementById('referralsCount').innerHTML = `👥 ${referralsCount} друзей · +${referralsCount * 50} XP`;
             }
@@ -616,7 +599,6 @@
             renderCalendar(currentYear, currentMonth);
         }
         
-        // Календарь
         function renderCalendar(year, month) {
             const monthNames = ['Январь', 'Февраль', 'Март', 'Апрель', 'Май', 'Июнь',
                                'Июль', 'Август', 'Сентябрь', 'Октябрь', 'Ноябрь', 'Декабрь'];
@@ -633,23 +615,14 @@
                 html += `<div class="weekday">${day}</div>`;
             });
             
-            // Пустые ячейки до первого дня
             for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
                 html += '<div class="day"></div>';
             }
             
-            // Дни месяца
             for (let day = 1; day <= daysInMonth; day++) {
                 let classes = ['day'];
-                
-                if (userData.activeDays && userData.activeDays.includes(day)) {
-                    classes.push('active');
-                }
-                
-                if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) {
-                    classes.push('today');
-                }
-                
+                if (userData.activeDays && userData.activeDays.includes(day)) classes.push('active');
+                if (year === today.getFullYear() && month === today.getMonth() && day === today.getDate()) classes.push('today');
                 html += `<div class="${classes.join(' ')}">${day}</div>`;
             }
             
@@ -657,26 +630,15 @@
         }
         
         function prevMonth() {
-            if (currentMonth === 0) {
-                currentYear--;
-                currentMonth = 11;
-            } else {
-                currentMonth--;
-            }
+            if (currentMonth === 0) { currentYear--; currentMonth = 11; } else { currentMonth--; }
             renderCalendar(currentYear, currentMonth);
         }
         
         function nextMonth() {
-            if (currentMonth === 11) {
-                currentYear++;
-                currentMonth = 0;
-            } else {
-                currentMonth++;
-            }
+            if (currentMonth === 11) { currentYear++; currentMonth = 0; } else { currentMonth++; }
             renderCalendar(currentYear, currentMonth);
         }
         
-        // Запрос данных
         tg.sendData(JSON.stringify({action: 'getUserData'}));
     </script>
 </body>
