@@ -10,6 +10,7 @@
     <meta http-equiv="Pragma" content="no-cache">
     <meta http-equiv="Expires" content="0">
     <style>
+        /* ===== ТЁМНАЯ ТЕМА ===== */
         * {
             margin: 0;
             padding: 0;
@@ -415,7 +416,7 @@
         </div>
     </div>
     
-    <!-- НАСТРОЙКИ - РАБОЧАЯ КНОПКА -->
+    <!-- НАСТРОЙКИ - ИСПРАВЛЕННАЯ РАБОЧАЯ КНОПКА -->
     <div id="settings-section" class="hidden">
         <div class="section">
             <div class="section-title">⚙️ Настройки</div>
@@ -426,7 +427,6 @@
                     <div class="setting-desc">Автоматическое исправление грамматики</div>
                 </div>
                 <label class="switch">
-                    <!-- ✅ ВОТ ТУТ ДОБАВЛЕН onchange -->
                     <input type="checkbox" id="correctionsSwitch" onchange="toggleCorrections()">
                     <span class="slider"></span>
                 </label>
@@ -473,17 +473,22 @@
         let currentMonth = currentDate.getMonth();
         let userData = {};
         
+        // Запрос данных при загрузке
         tg.sendData(JSON.stringify({action: 'getUserData'}));
         
+        // Слушаем ответы от бота
         tg.onEvent('message', function(event) {
             try {
                 const data = JSON.parse(event.data);
                 if (data && typeof data === 'object') {
                     updateUI(data);
                 }
-            } catch (e) {}
+            } catch (e) {
+                console.log('Error parsing data:', e);
+            }
         });
         
+        // Переключение разделов
         function showSection(section) {
             document.getElementById('profile-section').classList.add('hidden');
             document.getElementById('referrals-section').classList.add('hidden');
@@ -502,16 +507,17 @@
             }
         }
         
-        // ✅ ФУНКЦИЯ ВЫЗЫВАЕТСЯ ПРИ ПЕРЕКЛЮЧЕНИИ
+        // ✅ ОТПРАВКА НАСТРОЙКИ В БОТА
         function toggleCorrections() {
             const isEnabled = document.getElementById('correctionsSwitch').checked;
             tg.sendData(JSON.stringify({
                 action: 'toggleCorrections',
                 value: isEnabled
             }));
-            console.log('Отправлено значение:', isEnabled);
+            console.log('🔄 Отправлена настройка:', isEnabled);
         }
         
+        // ✅ ЭКСПОРТ ДИАЛОГОВ
         function exportChat() {
             tg.sendData(JSON.stringify({
                 action: 'exportChat'
@@ -522,6 +528,7 @@
             });
         }
         
+        // ✅ КОПИРОВАНИЕ РЕФЕРАЛЬНОЙ ССЫЛКИ
         function copyReferralLink() {
             const link = document.getElementById('referralLink').textContent;
             navigator.clipboard.writeText(link).then(() => {
@@ -532,6 +539,7 @@
             });
         }
         
+        // ✅ ОБНОВЛЕНИЕ ИНТЕРФЕЙСА
         function updateUI(data) {
             userData = data;
             
@@ -540,11 +548,13 @@
             document.getElementById('currentStreak').innerText = data.currentStreak || 0;
             document.getElementById('referralsCount').innerText = data.referrals_count || 0;
             
+            // Устанавливаем состояние переключателя
             const switchEl = document.getElementById('correctionsSwitch');
             if (data.corrections !== undefined) {
                 switchEl.checked = data.corrections;
             }
             
+            // Реферальная ссылка
             if (data.referral_code) {
                 const botUsername = 'prestige046_bot';
                 const refLink = `https://t.me/${botUsername}?start=ref_${data.referral_code}`;
@@ -554,6 +564,7 @@
             renderCalendar(currentYear, currentMonth);
         }
         
+        // ✅ КАЛЕНДАРЬ
         function renderCalendar(year, month) {
             const monthNames = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь',
                                'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
@@ -571,10 +582,12 @@
                 html += `<div class="weekday ${weekendClass}">${day}</div>`;
             });
             
+            // Пустые ячейки
             for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
                 html += '<div></div>';
             }
             
+            // Дни месяца
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(year, month, day);
                 const weekday = date.getDay();
@@ -595,6 +608,7 @@
             document.getElementById('calendarGrid').innerHTML = html;
         }
         
+        // Навигация по месяцам
         function prevMonth() {
             if (currentMonth === 0) {
                 currentYear--;
