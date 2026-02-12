@@ -5,6 +5,10 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Разговорный клуб</title>
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
+    <!-- Сброс кэша -->
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <style>
         * {
             margin: 0;
@@ -14,14 +18,14 @@
         }
         
         body {
-            background: #ffffff;
-            color: #000000;
+            background: #1c1c1e;
+            color: #ffffff;
             padding: 16px;
             padding-bottom: 80px;
             min-height: 100vh;
         }
         
-        /* Профиль как на скрине */
+        /* Профиль - тёмная тема */
         .profile-header {
             display: flex;
             align-items: center;
@@ -32,6 +36,7 @@
         .profile-name {
             font-size: 28px;
             font-weight: 700;
+            color: #ffffff;
         }
         
         .profile-stars {
@@ -43,12 +48,16 @@
             margin-top: 4px;
         }
         
-        /* Статистика */
+        .star-icon {
+            color: #ffcc00;
+        }
+        
+        /* Статистика - тёмная */
         .stats-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
-            background: #f8f8f8;
+            background: #2c2c2e;
             border-radius: 16px;
             padding: 16px;
             margin-bottom: 24px;
@@ -72,7 +81,7 @@
             color: #40a7e3;
         }
         
-        /* Стрейк */
+        /* Стрейк - без изменений */
         .streak-card {
             background: linear-gradient(135deg, #FF6B6B, #FF8E53);
             border-radius: 16px;
@@ -105,13 +114,13 @@
             margin-left: 8px;
         }
         
-        /* Календарь */
+        /* Календарь - тёмный */
         .calendar-card {
-            background: #ffffff;
+            background: #2c2c2e;
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 24px;
-            border: 1px solid #f0f0f0;
+            border: 1px solid #3a3a3c;
         }
         
         .calendar-header {
@@ -124,6 +133,7 @@
         .calendar-title {
             font-size: 18px;
             font-weight: 600;
+            color: #ffffff;
         }
         
         .calendar-nav {
@@ -132,17 +142,13 @@
         }
         
         .nav-btn {
-            background: none;
+            background: #3a3a3c;
             border: none;
             font-size: 20px;
             cursor: pointer;
             color: #40a7e3;
-            padding: 4px 8px;
+            padding: 4px 12px;
             border-radius: 8px;
-        }
-        
-        .nav-btn:hover {
-            background: #f0f0f0;
         }
         
         .calendar-grid {
@@ -171,6 +177,7 @@
             margin: 0 auto;
             font-size: 15px;
             border-radius: 50%;
+            color: #ffffff;
         }
         
         .day.active {
@@ -182,6 +189,7 @@
             border: 2px solid #40a7e3;
             color: #40a7e3;
             font-weight: 700;
+            background: transparent;
         }
         
         .day.weekend {
@@ -193,30 +201,33 @@
             color: white;
         }
         
-        /* Секции */
+        /* Секции - тёмные */
         .section {
-            background: #f8f8f8;
+            background: #2c2c2e;
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 16px;
+            border: 1px solid #3a3a3c;
         }
         
         .section-title {
             font-size: 20px;
             font-weight: 700;
             margin-bottom: 16px;
+            color: #ffffff;
         }
         
-        /* Рефералы */
+        /* Рефералы - тёмные */
         .referral-box {
-            background: white;
-            border: 1px solid #f0f0f0;
+            background: #1c1c1e;
+            border: 1px solid #3a3a3c;
             border-radius: 12px;
             padding: 14px;
             font-family: monospace;
             font-size: 13px;
             word-break: break-all;
             margin: 16px 0;
+            color: #ffffff;
         }
         
         .btn {
@@ -231,13 +242,13 @@
             cursor: pointer;
         }
         
-        /* Настройки */
+        /* Настройки - тёмные */
         .setting-row {
             display: flex;
             align-items: center;
             justify-content: space-between;
             padding: 16px 0;
-            border-bottom: 1px solid #f0f0f0;
+            border-bottom: 1px solid #3a3a3c;
         }
         
         .setting-row:last-child {
@@ -248,6 +259,7 @@
             font-size: 16px;
             font-weight: 600;
             margin-bottom: 2px;
+            color: #ffffff;
         }
         
         .setting-desc {
@@ -255,7 +267,7 @@
             color: #8e8e93;
         }
         
-        /* Switch */
+        /* Switch - iOS стиль */
         .switch {
             position: relative;
             display: inline-block;
@@ -276,7 +288,7 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background-color: #e5e5ea;
+            background-color: #3a3a3c;
             transition: .2s;
             border-radius: 31px;
         }
@@ -301,18 +313,18 @@
             transform: translateX(20px);
         }
         
-        /* Нижнее меню как в Chatty */
+        /* Нижнее меню - тёмное */
         .bottom-nav {
             position: fixed;
             bottom: 0;
             left: 0;
             right: 0;
-            background: white;
+            background: #1c1c1e;
             display: flex;
             justify-content: space-around;
             padding: 10px 16px;
             padding-bottom: calc(10px + env(safe-area-inset-bottom));
-            border-top: 1px solid #f0f0f0;
+            border-top: 1px solid #3a3a3c;
         }
         
         .nav-item {
@@ -336,7 +348,7 @@
         }
         
         .nav-item.active {
-            background: #e8f2ff;
+            background: #2c2c2e;
         }
         
         .nav-item.active .nav-icon,
@@ -351,13 +363,13 @@
     </style>
 </head>
 <body>
-    <!-- ПРОФИЛЬ (ТОЧНО КАК НА СКРИНЕ) -->
+    <!-- ПРОФИЛЬ (ТЁМНАЯ ТЕМА) -->
     <div id="profile-section">
         <div class="profile-header">
             <div>
                 <div class="profile-name">Roman</div>
                 <div class="profile-stars">
-                    <span style="color: #ffcc00;">⭐</span> 11
+                    <span class="star-icon">⭐</span> 11
                 </div>
             </div>
         </div>
@@ -396,7 +408,7 @@
         </div>
     </div>
     
-    <!-- РЕФЕРАЛЫ -->
+    <!-- РЕФЕРАЛЫ (ТЁМНАЯ ТЕМА) -->
     <div id="referrals-section" class="hidden">
         <div class="section">
             <div class="section-title">👥 Invite Friends</div>
@@ -405,14 +417,14 @@
             </div>
             <div class="referral-box" id="referralLink">Loading...</div>
             <button class="btn" onclick="copyReferralLink()">📋 Copy Link</button>
-            <div style="margin-top: 16px; padding: 12px; background: white; border-radius: 12px; border: 1px solid #f0f0f0;">
-                <span>Friends joined: </span>
+            <div style="margin-top: 16px; padding: 12px; background: #1c1c1e; border-radius: 12px; border: 1px solid #3a3a3c;">
+                <span style="color: #8e8e93;">Friends joined: </span>
                 <span style="font-weight: 600; color: #40a7e3;" id="referralsCount">0</span>
             </div>
         </div>
     </div>
     
-    <!-- НАСТРОЙКИ (РУССКИЙ ЯЗЫК) -->
+    <!-- НАСТРОЙКИ (РУССКИЙ, ТЁМНАЯ ТЕМА) -->
     <div id="settings-section" class="hidden">
         <div class="section">
             <div class="section-title">⚙️ Настройки</div>
@@ -440,7 +452,7 @@
         </div>
     </div>
     
-    <!-- НИЖНЕЕ МЕНЮ -->
+    <!-- НИЖНЕЕ МЕНЮ (ТЁМНОЕ) -->
     <div class="bottom-nav">
         <div class="nav-item active" onclick="showSection('profile')">
             <span class="nav-icon">👤</span>
@@ -460,6 +472,10 @@
         const tg = window.Telegram.WebApp;
         tg.expand();
         tg.ready();
+        
+        // ПРИНУДИТЕЛЬНО ТЁМНАЯ ТЕМА
+        tg.setHeaderColor('#1c1c1e');
+        tg.setBackgroundColor('#1c1c1e');
         
         let currentDate = new Date();
         let currentYear = currentDate.getFullYear();
@@ -533,7 +549,6 @@
             document.getElementById('currentStreak').innerText = data.currentStreak || 0;
             document.getElementById('referralsCount').innerText = data.referrals_count || 0;
             
-            // Настройки - переключатель
             const switchEl = document.getElementById('correctionsSwitch');
             if (data.corrections !== undefined) {
                 switchEl.checked = data.corrections;
@@ -541,7 +556,6 @@
             switchEl.removeEventListener('change', toggleCorrections);
             switchEl.addEventListener('change', toggleCorrections);
             
-            // Реферальная ссылка
             if (data.referral_code) {
                 const botUsername = 'prestige046_bot';
                 const refLink = `https://t.me/${botUsername}?start=ref_${data.referral_code}`;
@@ -568,12 +582,10 @@
                 html += `<div class="weekday ${weekendClass}">${day}</div>`;
             });
             
-            // Пустые ячейки
             for (let i = 0; i < (firstDay === 0 ? 6 : firstDay - 1); i++) {
                 html += '<div></div>';
             }
             
-            // Дни месяца
             for (let day = 1; day <= daysInMonth; day++) {
                 const date = new Date(year, month, day);
                 const weekday = date.getDay();
