@@ -240,82 +240,6 @@
             font-size: 13px;
         }
         
-        .btn.outline {
-            background: transparent;
-            border: 1px solid #40a7e3;
-            color: #40a7e3;
-        }
-        
-        .setting-row {
-            display: flex;
-            align-items: center;
-            justify-content: space-between;
-            padding: 16px 0;
-            border-bottom: 1px solid #3a3a3c;
-        }
-        
-        .setting-row:last-child {
-            border-bottom: none;
-        }
-        
-        .setting-title {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 2px;
-            color: #ffffff;
-        }
-        
-        .setting-desc {
-            font-size: 13px;
-            color: #8e8e93;
-        }
-        
-        .switch {
-            position: relative;
-            display: inline-block;
-            width: 51px;
-            height: 31px;
-        }
-        
-        .switch input {
-            opacity: 0;
-            width: 0;
-            height: 0;
-        }
-        
-        .slider {
-            position: absolute;
-            cursor: pointer;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background-color: #3a3a3c;
-            transition: .2s;
-            border-radius: 31px;
-        }
-        
-        .slider:before {
-            position: absolute;
-            content: "";
-            height: 27px;
-            width: 27px;
-            left: 2px;
-            bottom: 2px;
-            background-color: white;
-            transition: .2s;
-            border-radius: 50%;
-        }
-        
-        input:checked + .slider {
-            background-color: #40a7e3;
-        }
-        
-        input:checked + .slider:before {
-            transform: translateX(20px);
-        }
-        
-        /* Словарь */
         .word-card {
             background: #1c1c1e;
             border: 1px solid #3a3a3c;
@@ -343,23 +267,12 @@
             color: #8e8e93;
         }
         
-        .word-context {
-            font-size: 12px;
-            color: #40a7e3;
-            margin-top: 4px;
-            font-style: italic;
-        }
-        
         .delete-word {
             color: #ff6b6b;
             font-size: 20px;
             padding: 8px;
             cursor: pointer;
             border-radius: 8px;
-        }
-        
-        .delete-word:hover {
-            background: #3a3a3c;
         }
         
         .add-word {
@@ -376,50 +289,6 @@
             padding: 12px;
             color: white;
             font-size: 15px;
-        }
-        
-        .add-word input::placeholder {
-            color: #8e8e93;
-        }
-        
-        /* Роли */
-        .role-card {
-            background: #1c1c1e;
-            border: 1px solid #3a3a3c;
-            border-radius: 12px;
-            padding: 16px;
-            margin-bottom: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            cursor: pointer;
-            transition: border 0.2s;
-        }
-        
-        .role-card.selected {
-            border: 2px solid #40a7e3;
-            background: rgba(64, 167, 227, 0.1);
-        }
-        
-        .role-info {
-            flex: 1;
-        }
-        
-        .role-name {
-            font-size: 16px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            color: #ffffff;
-        }
-        
-        .role-desc {
-            font-size: 13px;
-            color: #8e8e93;
-        }
-        
-        .role-icon {
-            font-size: 24px;
-            margin-right: 12px;
         }
         
         .bottom-nav {
@@ -538,7 +407,6 @@
             </div>
             
             <div id="wordList">
-                <!-- Слова будут загружены сюда -->
                 <div class="empty-state">
                     <div class="empty-state-icon">📖</div>
                     <div>Ваш словарь пуст</div>
@@ -564,116 +432,14 @@
         </div>
     </div>
     
-    <!-- НАСТРОЙКИ (С РОЛЯМИ) -->
+    <!-- НАСТРОЙКИ (ПУСТОЙ БЛОК) -->
     <div id="settings-section" class="hidden">
         <div class="section">
             <div class="section-title">⚙️ Настройки</div>
-            
-            <div class="setting-row">
-                <div>
-                    <div class="setting-title">Исправлять ошибки</div>
-                    <div class="setting-desc">Автоматическое исправление грамматики</div>
-                </div>
-                <label class="switch">
-                    <input type="checkbox" id="correctionsSwitch" onchange="toggleCorrections()">
-                    <span class="slider"></span>
-                </label>
-            </div>
-            
-            <div class="setting-row">
-                <div>
-                    <div class="setting-title">🎭 Роль собеседника</div>
-                    <div class="setting-desc" id="selectedRoleDesc">Обычный собеседник</div>
-                </div>
-                <button class="btn small outline" onclick="showRoleSelector()" style="width: auto;">
-                    Сменить
-                </button>
-            </div>
-            
-            <div class="setting-row">
-                <div>
-                    <div class="setting-title">📥 Выгрузить диалоги</div>
-                    <div class="setting-desc">Сохранить историю разговоров</div>
-                </div>
-                <button onclick="exportChat()" style="background: #40a7e3; color: white; border: none; padding: 8px 16px; border-radius: 10px; font-size: 14px; cursor: pointer;">
-                    Скачать
-                </button>
-            </div>
-        </div>
-    </div>
-    
-    <!-- ВЫБОР РОЛИ (ВСПЛЫВАЮЩАЯ СЕКЦИЯ) -->
-    <div id="role-selector-section" class="hidden">
-        <div class="section">
-            <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-                <div class="section-title">🎭 Выбери роль</div>
-                <button onclick="hideRoleSelector()" style="background: none; border: none; color: #40a7e3; font-size: 24px; cursor: pointer;">✕</button>
-            </div>
-            
-            <div class="role-card" onclick="selectRole('casual')">
-                <div style="display: flex; align-items: center;">
-                    <span class="role-icon">🗣️</span>
-                    <div class="role-info">
-                        <div class="role-name">Обычный собеседник</div>
-                        <div class="role-desc">Дружелюбный, безоценочный, для ежедневной практики</div>
-                    </div>
-                </div>
-                <span id="role-check-casual" style="color: #40a7e3; font-size: 20px;">✓</span>
-            </div>
-            
-            <div class="role-card" onclick="selectRole('hr')">
-                <div style="display: flex; align-items: center;">
-                    <span class="role-icon">💼</span>
-                    <div class="role-info">
-                        <div class="role-name">HR-менеджер</div>
-                        <div class="role-desc">Собеседование на английском, вопросы о опыте и навыках</div>
-                    </div>
-                </div>
-                <span id="role-check-hr" style="color: #40a7e3; font-size: 20px;"></span>
-            </div>
-            
-            <div class="role-card" onclick="selectRole('restaurant')">
-                <div style="display: flex; align-items: center;">
-                    <span class="role-icon">🍷</span>
-                    <div class="role-info">
-                        <div class="role-name">Ресторан</div>
-                        <div class="role-desc">Заказ еды, общение с официантом, решение проблем</div>
-                    </div>
-                </div>
-                <span id="role-check-restaurant" style="color: #40a7e3; font-size: 20px;"></span>
-            </div>
-            
-            <div class="role-card" onclick="selectRole('hotel')">
-                <div style="display: flex; align-items: center;">
-                    <span class="role-icon">🏨</span>
-                    <div class="role-info">
-                        <div class="role-name">Отель</div>
-                        <div class="role-desc">Заселение, жалобы, заказ услуг</div>
-                    </div>
-                </div>
-                <span id="role-check-hotel" style="color: #40a7e3; font-size: 20px;"></span>
-            </div>
-            
-            <div class="role-card" onclick="selectRole('airport')">
-                <div style="display: flex; align-items: center;">
-                    <span class="role-icon">🛫</span>
-                    <div class="role-info">
-                        <div class="role-name">Аэропорт</div>
-                        <div class="role-desc">Регистрация, паспортный контроль, задержка рейса</div>
-                    </div>
-                </div>
-                <span id="role-check-airport" style="color: #40a7e3; font-size: 20px;"></span>
-            </div>
-            
-            <div class="role-card" onclick="selectRole('doctor')">
-                <div style="display: flex; align-items: center;">
-                    <span class="role-icon">🏥</span>
-                    <div class="role-info">
-                        <div class="role-name">Больница</div>
-                        <div class="role-desc">Описание симптомов, запись к врачу</div>
-                    </div>
-                </div>
-                <span id="role-check-doctor" style="color: #40a7e3; font-size: 20px;"></span>
+            <div class="empty-state">
+                <div class="empty-state-icon">⚙️</div>
+                <div>Настройки бота</div>
+                <div style="font-size: 13px; margin-top: 8px;">Используй команду /settings в чате</div>
             </div>
         </div>
     </div>
@@ -708,22 +474,20 @@
         let currentMonth = currentDate.getMonth();
         let userData = {};
         let userVocabulary = [];
-        let selectedRole = 'casual';
         
         // Запрос данных при загрузке
         tg.sendData(JSON.stringify({action: 'getUserData'}));
         tg.sendData(JSON.stringify({action: 'getVocabulary'}));
-        tg.sendData(JSON.stringify({action: 'getRole'}));
         
         // Слушаем ответы от бота
         tg.onEvent('message', function(event) {
             try {
                 const data = JSON.parse(event.data);
+                console.log('🔥 Получено от бота:', data);
+                
                 if (data && typeof data === 'object') {
                     if (data.action === 'vocabulary') {
-                        updateVocabulary(data.words);
-                    } else if (data.action === 'role') {
-                        updateRole(data.role);
+                        updateVocabulary(data.words || []);
                     } else {
                         updateUI(data);
                     }
@@ -739,7 +503,6 @@
             document.getElementById('vocabulary-section').classList.add('hidden');
             document.getElementById('referrals-section').classList.add('hidden');
             document.getElementById('settings-section').classList.add('hidden');
-            document.getElementById('role-selector-section').classList.add('hidden');
             document.querySelectorAll('.nav-item').forEach(item => item.classList.remove('active'));
             
             if (section === 'profile') {
@@ -767,14 +530,6 @@
                     action: 'addWord',
                     word: word
                 }));
-                
-                // Добавляем временно в интерфейс
-                userVocabulary.push({
-                    word: word,
-                    translation: '...',
-                    added: new Date().toISOString()
-                });
-                renderVocabulary();
                 wordInput.value = '';
             }
         }
@@ -784,9 +539,6 @@
                 action: 'deleteWord',
                 word: word
             }));
-            
-            userVocabulary = userVocabulary.filter(w => w.word !== word);
-            renderVocabulary();
         }
         
         function updateVocabulary(words) {
@@ -816,7 +568,6 @@
                         <div class="word-info">
                             <div class="word-text">${escapeHtml(word.word)}</div>
                             <div class="word-translation">${word.translation || '...'}</div>
-                            ${word.context ? `<div class="word-context">«${escapeHtml(word.context)}»</div>` : ''}
                         </div>
                         <span class="delete-word" onclick="deleteWord('${escapeHtml(word.word)}')">✕</span>
                     </div>
@@ -826,68 +577,7 @@
             wordList.innerHTML = html;
         }
         
-        // ========== РОЛИ ==========
-        function showRoleSelector() {
-            document.getElementById('settings-section').classList.add('hidden');
-            document.getElementById('role-selector-section').classList.remove('hidden');
-        }
-        
-        function hideRoleSelector() {
-            document.getElementById('role-selector-section').classList.add('hidden');
-            document.getElementById('settings-section').classList.remove('hidden');
-        }
-        
-        function selectRole(role) {
-            selectedRole = role;
-            
-            // Обновляем галочки
-            document.querySelectorAll('[id^="role-check-"]').forEach(el => el.innerHTML = '');
-            document.getElementById(`role-check-${role}`).innerHTML = '✓';
-            
-            // Обновляем описание
-            const roleNames = {
-                'casual': 'Обычный собеседник',
-                'hr': 'HR-менеджер',
-                'restaurant': 'Ресторан',
-                'hotel': 'Отель',
-                'airport': 'Аэропорт',
-                'doctor': 'Больница'
-            };
-            document.getElementById('selectedRoleDesc').innerText = roleNames[role] || role;
-            
-            // Отправляем в бота
-            tg.sendData(JSON.stringify({
-                action: 'setRole',
-                role: role
-            }));
-            
-            hideRoleSelector();
-        }
-        
-        function updateRole(role) {
-            selectedRole = role || 'casual';
-            selectRole(selectedRole);
-        }
-        
-        // ========== ОСТАЛЬНЫЕ ФУНКЦИИ ==========
-        function toggleCorrections() {
-            const isEnabled = document.getElementById('correctionsSwitch').checked;
-            tg.sendData(JSON.stringify({
-                action: 'toggleCorrections',
-                value: isEnabled
-            }));
-        }
-        
-        function exportChat() {
-            tg.sendData(JSON.stringify({
-                action: 'exportChat'
-            }));
-            tg.showPopup({
-                message: '📥 Генерирую файл с историей...',
-                buttons: [{type: 'ok'}]
-            });
-        }
-        
+        // ========== РЕФЕРАЛЫ ==========
         function copyReferralLink() {
             const link = document.getElementById('referralLink').textContent;
             navigator.clipboard.writeText(link).then(() => {
@@ -898,27 +588,13 @@
             });
         }
         
-        function escapeHtml(text) {
-            if (!text) return '';
-            return String(text)
-                .replace(/&/g, '&amp;')
-                .replace(/</g, '&lt;')
-                .replace(/>/g, '&gt;')
-                .replace(/"/g, '&quot;')
-                .replace(/'/g, '&#039;');
-        }
-        
+        // ========== ОБНОВЛЕНИЕ ИНТЕРФЕЙСА ==========
         function updateUI(data) {
             userData = data;
             
             document.getElementById('inviteCount').innerText = data.referrals_count || 0;
             document.getElementById('currentStreak').innerText = data.currentStreak || 0;
             document.getElementById('referralsCount').innerText = data.referrals_count || 0;
-            
-            const switchEl = document.getElementById('correctionsSwitch');
-            if (data.corrections !== undefined) {
-                switchEl.checked = data.corrections;
-            }
             
             if (data.referral_code) {
                 const botUsername = 'prestige046_bot';
@@ -929,6 +605,7 @@
             renderCalendar(currentYear, currentMonth);
         }
         
+        // ========== КАЛЕНДАРЬ ==========
         function renderCalendar(year, month) {
             const monthNames = ['январь', 'февраль', 'март', 'апрель', 'май', 'июнь',
                                'июль', 'август', 'сентябрь', 'октябрь', 'ноябрь', 'декабрь'];
@@ -990,16 +667,18 @@
             renderCalendar(currentYear, currentMonth);
         }
         
-        // Инициализация
+        function escapeHtml(text) {
+            if (!text) return '';
+            return String(text)
+                .replace(/&/g, '&amp;')
+                .replace(/</g, '&lt;')
+                .replace(/>/g, '&gt;')
+                .replace(/"/g, '&quot;')
+                .replace(/'/g, '&#039;');
+        }
+        
+        // Инициализация при загрузке
         document.addEventListener('DOMContentLoaded', function() {
-            const today = new Date();
-            currentYear = today.getFullYear();
-            currentMonth = today.getMonth();
-            
-            if (!userData.activeDays) {
-                userData.activeDays = [];
-            }
-            
             renderCalendar(currentYear, currentMonth);
         });
     </script>
